@@ -1,0 +1,9 @@
+f_exp,st,level,marginal,lower,upper,scale
+Sacramento,Bins,0.0,-0.0004139600959056091,0.0,inf,1.0
+Sacramento,Racking,18478.637263446642,0.0,0.0,inf,1.0
+Sacramento,Pallet,3579.5323396623194,0.0,0.0,inf,1.0
+Sacramento,Hazmat,0.0,-0.0027612835145191666,0.0,inf,1.0
+Austin,Bins,0.0,-0.0005212658819979947,0.0,inf,1.0
+Austin,Racking,0.0,-0.0005735236648125774,0.0,inf,1.0
+Austin,Pallet,2246.017632146506,0.0,0.0,inf,1.0
+Austin,Hazmat,0.0,-0.0013463443602135241,0.0,inf,1.0

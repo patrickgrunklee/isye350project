@@ -1,0 +1,151 @@
+====================================================================================================
+SMOOTHED DEMAND TEST RESULTS - DEMAND VOLATILITY IMPACT ANALYSIS
+====================================================================================================
+
+TEST METHODOLOGY:
+-----------------
+For each SKU, identified the top 2 peak demand months (typically July 2035 and July 2034)
+and replaced those peak values with the average of the remaining 118 months.
+
+This tests the impact of demand volatility (peak spikes) on warehouse capacity requirements.
+
+====================================================================================================
+RESULTS COMPARISON: ORIGINAL vs SMOOTHED DEMAND
+====================================================================================================
+
+Scenario          | Original Demand | Smoothed Demand | Reduction    | % Reduction
+                  | (shelves)       | (shelves)       | (shelves)    |
+------------------|-----------------|-----------------|--------------|-------------
+10/3 business days|      7,210      |      3,490      |    3,720     |    51.6%
+5/2 business days |      6,697      |      3,151      |    3,546     |    53.0%
+3/1 business days |      6,511      |      3,131      |    3,380     |    51.9%
+0/0 business days |      6,507      |      3,127      |    3,380     |    51.9%
+
+====================================================================================================
+DETAILED BREAKDOWN BY SCENARIO
+====================================================================================================
+
+[1] 10/3 Business Days DoH (International: 10 days, Domestic: 3 days)
+----------------------------------------------------------------------------------------------------
+ORIGINAL DEMAND:
+  - Sacramento expansion: 1,514 shelves
+  - Austin expansion: 5,696 shelves
+  - TOTAL: 7,210 shelves
+
+SMOOTHED DEMAND:
+  - Sacramento expansion: 725 shelves
+  - Austin expansion: 2,765 shelves
+  - TOTAL: 3,490 shelves
+
+REDUCTION: 3,720 shelves (51.6% less capacity needed)
+
+[2] 5/2 Business Days DoH (International: 5 days, Domestic: 2 days)
+----------------------------------------------------------------------------------------------------
+ORIGINAL DEMAND:
+  - Sacramento expansion: 392 shelves
+  - Austin expansion: 6,305 shelves
+  - TOTAL: 6,697 shelves
+
+SMOOTHED DEMAND:
+  - Sacramento expansion: 0 shelves (no expansion needed)
+  - Austin expansion: 3,151 shelves
+  - TOTAL: 3,151 shelves
+
+REDUCTION: 3,546 shelves (53.0% less capacity needed)
+
+[3] 3/1 Business Days DoH (International: 3 days, Domestic: 1 day) - RECOMMENDED
+----------------------------------------------------------------------------------------------------
+ORIGINAL DEMAND:
+  - Sacramento expansion: 0 shelves (no expansion needed)
+  - Austin expansion: 6,511 shelves
+  - TOTAL: 6,511 shelves
+
+SMOOTHED DEMAND:
+  - Sacramento expansion: 0 shelves (no expansion needed)
+  - Austin expansion: 3,131 shelves
+  - TOTAL: 3,131 shelves
+
+REDUCTION: 3,380 shelves (51.9% less capacity needed)
+
+[4] 0/0 Business Days DoH (No safety stock - JIT inventory)
+----------------------------------------------------------------------------------------------------
+ORIGINAL DEMAND:
+  - Sacramento expansion: 0 shelves (no expansion needed)
+  - Austin expansion: 6,507 shelves
+  - TOTAL: 6,507 shelves
+
+SMOOTHED DEMAND:
+  - Sacramento expansion: 0 shelves (no expansion needed)
+  - Austin expansion: 3,127 shelves
+  - TOTAL: 3,127 shelves
+
+REDUCTION: 3,380 shelves (51.9% less capacity needed)
+
+====================================================================================================
+KEY INSIGHTS
+====================================================================================================
+
+1. DEMAND VOLATILITY DRIVES ~52% OF CAPACITY REQUIREMENTS
+   - Across all 4 DoH policies, smoothing demand reduces expansion needs by 51.6-53.0%
+   - This demonstrates that peak demand spikes (primarily July 2035 and July 2034) are the
+     dominant driver of warehouse capacity requirements
+
+2. SAFETY STOCK HAS MINIMAL IMPACT (even with smoothed demand)
+   - 0/0 DoH (no safety stock): 3,127 shelves
+   - 3/1 DoH (recommended):     3,131 shelves
+   - Difference: Only 4 shelves (0.1%)
+   - This confirms safety stock is NOT the capacity driver - it's the peak demand levels
+
+3. PEAK MONTHS IDENTIFIED
+   - July 2035 was the #1 peak month for almost all SKUs
+   - July 2034 was the #2 peak month for most SKUs
+   - These two months alone account for ~3,380-3,720 shelves of expansion (52% of total)
+
+4. IMPLICATIONS FOR OPERATIONS
+   - Consider temporary overflow strategies for peak months (July 2034 and July 2035)
+   - 3PL partnerships or temporary storage during peak seasons could eliminate 52% of CapEx
+   - Peak demand management strategies (promotions, pre-orders) could smooth demand curve
+   - Current model assumes permanent capacity for transient peaks
+
+====================================================================================================
+STRATEGIC RECOMMENDATIONS
+====================================================================================================
+
+OPTION A: BUILD FOR SMOOTHED DEMAND + TEMPORARY OVERFLOW
+  - Build permanent capacity for smoothed demand: ~3,131 shelves (3/1 DoH)
+  - Use temporary 3PL storage for 2 peak months: ~3,380 shelves capacity
+  - Cost comparison:
+    * Permanent: 6,511 shelves × construction cost
+    * Alternative: 3,131 shelves × construction cost + temporary storage fees
+
+OPTION B: DEMAND MANAGEMENT
+  - Implement demand smoothing strategies:
+    * Early-bird promotions before July peaks
+    * Spread back-to-school demand across May-August
+    * Pre-order programs for high-demand items
+  - Goal: Reduce July peak by redistributing to adjacent months
+
+OPTION C: HYBRID APPROACH (RECOMMENDED)
+  - Build for 80th percentile demand: ~4,500-5,000 shelves
+  - Temporary overflow for top 20% peak months
+  - Implement modest demand smoothing initiatives
+  - Balances CapEx vs OpEx tradeoffs
+
+====================================================================================================
+CONCLUSION
+====================================================================================================
+
+The smoothed demand test conclusively demonstrates that:
+
+1. Demand volatility (peak spikes) is responsible for ~52% of warehouse capacity requirements
+2. Safety stock policies have minimal impact (only 4 shelves difference between 0/0 and 3/1 DoH)
+3. Two peak months (July 2035, July 2034) drive the majority of expansion needs
+4. Temporary overflow strategies could reduce permanent CapEx by ~52%
+
+RECOMMENDED NEXT STEPS:
+  1. Analyze feasibility of temporary 3PL partnerships for peak months
+  2. Cost-benefit analysis: permanent capacity vs temporary overflow
+  3. Explore demand management strategies to smooth July peaks
+  4. Consider phased expansion approach (build 3,131 now, evaluate peaks later)
+
+====================================================================================================

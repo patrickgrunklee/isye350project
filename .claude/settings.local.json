@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv:*)",
+      "Bash(cat:*)",
+      "Bash(timeout 15 sleep:*)",
+      "Bash(python phase1_set_packing.py:*)",
+      "Bash(python -c:*)",
+      "Bash(python:*)",
+      "Bash(dir:*)",
+      "Bash(if [ -f \"results/Phase1_SetPacking/packing_configurations_pure_sku.csv\" ])",
+      "Bash(then cp \"results/Phase1_SetPacking/packing_configurations_pure_sku.csv\" \"model2.0/results/Phase1_SetPacking/\")",
+      "Bash(fi)",
+      "Bash(if [ -f \"results/Phase1_SetPacking/packing_configurations_3d.csv\" ])",
+      "Bash(then cp \"results/Phase1_SetPacking/packing_configurations_3d.csv\" \"model2.0/results/Phase1_SetPacking/\")",
+      "Bash(timeout 300 python:*)",
+      "Bash(tee:*)",
+      "Bash(for file in phase2_pure_sku_shelves_0_0_doh_ALL99pct.py phase2_pure_sku_shelves_5_2_doh_ALL99pct.py phase2_pure_sku_shelves_10_3_doh_ALL99pct.py)",
+      "Bash(do cp phase2_pure_sku_shelves_3_1_doh_ALL99pct.py \"$file\")",
+      "Bash(done)",
+      "Bash(for file in phase2_DAILY_0_0_doh.py phase2_DAILY_5_2_doh.py phase2_DAILY_10_3_doh.py)",
+      "Bash(do sed -i \"s/packing_configurations_pure_sku.csv/packing_configurations_pure_sku_discrete.csv/g\" \"$file\")",
+      "Bash(echo:*)",
+      "Bash(git init:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

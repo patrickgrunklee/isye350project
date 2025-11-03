@@ -1,0 +1,22 @@
+Facility,Department,Area (ft^2)
+Columbus,Inbound,69135
+Columbus,Storage,709542
+Columbus,Outbound,61996
+Columbus,Bathrooms,17024
+Columbus,Entrance,2379
+Columbus,Forklift Lanes,122286
+Columbus,Forklift Charging,17638
+Sacramento,Inbound,26505
+Sacramento,Storage,162144
+Sacramento,Outbound,49637
+Sacramento,Bathrooms,3450
+Sacramento,Entrance,938
+Sacramento,Forklift Lanes,3380
+Sacramento,Forklift Charging,3946
+Austin,Inbound,28210
+Austin,Storage,360099
+Austin,Outbound,37850
+Austin,Bathrooms,5652
+Austin,Entrance,2150
+Austin,Forklift Lanes,56007
+Austin,Forklift Charging,10032

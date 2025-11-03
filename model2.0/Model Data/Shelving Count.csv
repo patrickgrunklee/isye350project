@@ -1,0 +1,13 @@
+Facility,Shelving Type,Area,Number of Shelves,Max Items / Shelf,Number of Units Total,Weight Max / Item (lbs),Weight Max / Shelf,Total Weight Capacity
+Columbus ,Pallets,275450,3080,7,21560,600.0,4200.0,12936000.0
+Columbus ,Bins,175000,647680,1,647680,60.0,60.0,38860800.0
+Columbus ,Racking,160875,15600,8,124800,100.0,800.0,12480000.0
+Columbus ,Hazmat,98217,9200,8,73600,100.0,800.0,7360000.0
+Sacramento,Pallets,50690,1100,4,4400,600.0,2400.0,2640000.0
+Sacramento,Bins,35620,14400,3,43200,30.0,90.0,1296000.0
+Sacramento,Racking,60192,13078,8,104624,100.0,800.0,10462400.0
+Sacramento,Hazmat,15642,948,8,7584,100.0,800.0,758400.0
+Austin,Pallets,132145,1484,6,8904,600.0,3600.0,5342400.0
+Austin,Bins,81053,19688,3,59064,30.0,90.0,1181920.0
+Austin,Racking,118404,11424,8,91392,100.0,800.0,9139200.0
+Austin,Hazmat,28497,2680,8,21440,100.0,800.0,2144000.0

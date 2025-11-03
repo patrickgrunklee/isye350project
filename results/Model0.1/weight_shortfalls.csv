@@ -1,0 +1,4 @@
+Facility,Storage Type,Shortfall (lbs),marginal,lower,upper,scale
+Columbus,Pallet,974672.8,0.0,0.0,inf,1.0
+Sacramento,Pallet,3018984.2,0.0,0.0,inf,1.0
+Austin,Pallet,6652795.7,0.0,0.0,inf,1.0

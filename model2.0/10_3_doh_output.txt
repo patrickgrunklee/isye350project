@@ -1,0 +1,112 @@
+====================================================================================================
+PHASE 2: PURE-SKU CONTINUOUS PACKING MODEL - 10/3 DAYS-ON-HAND
+====================================================================================================
+
+APPROACH:
+  - Pure-SKU shelves: Continuous packing (volume/weight only)
+  - Mixed-SKU shelves: Discrete 7-item structure
+  - DoH = NO SAFETY STOCK (0 days on hand)
+  - International: 0 business days | Domestic: 0 business days
+  - Just-in-time inventory (only hold what's needed for monthly shipments)
+
+[1/7] Loading data files...
+   ✓ Data loaded
+
+[2/7] Processing SKU details and dimensions...
+   ✓ Processed 18 SKUs with volume/weight data
+
+[3/7] Extracting demand data...
+   ✓ Loaded demand for 120 months × 18 SKUs
+
+[4/7] Processing days-on-hand (traditional safety stock)...
+
+   Days-on-Hand Calculation:
+   Formula: Safety Stock = (Monthly Demand / 21 working days) × DoH
+   This is TRADITIONAL safety stock (days of demand coverage)
+
+   International SKUs: 10.0 business days
+   Domestic SKUs:      3.0 business days
+
+[5/7] Loading shelf specifications for pure-SKU continuous packing...
+   ✓ Shelf specifications loaded
+
+[6/7] Generating pure-SKU packing configurations...
+   Pure-SKU = entire shelf dedicated to one SKU
+   - Most SKUs: Discrete item-based packing (respects max items/shelf)
+   - Chairs & Desks: Continuous volume-based packing (no item limits)
+   ✓ Generated 153 pure-SKU configurations
+      - Discrete (items-based): 117
+      - Continuous (furniture): 36
+   Total configurations: 209
+     - Mixed-SKU discrete: 56
+     - Pure-SKU continuous: 153
+   ✓ Saved to packing_configurations_pure_sku.csv
+
+[7/7] Loading current shelving capacity...
+
+====================================================================================================
+BUILDING GAMSPY MODEL WITH PURE-SKU CONTINUOUS PACKING
+====================================================================================================
+   ✓ Sets and parameters created
+   ✓ Variables created (Columbus has no slack - must fit in current capacity)
+   ✓ Constraints created (ALL facilities must be at 99%+ utilization if any expansion needed)
+
+====================================================================================================
+SOLVING MODEL
+====================================================================================================
+
+====================================================================================================
+RESULTS: PURE-SKU CONTINUOUS PACKING
+====================================================================================================
+
+Total slack value: 721,415.31
+
+[1] DEMAND FULFILLMENT
+  ✓ All demand can be met!
+
+[2] FACILITY UTILIZATION & EXPANSION REQUIREMENTS
+
+Columbus: (HARD CONSTRAINT - no expansion allowed)
+  Pallet shelves used: 3,080 / 3,080 (100.0% utilization)
+  ✓ At 99%+ capacity
+
+Sacramento:
+  Pallet shelves used: 2,617 / 1,100 (237.9% utilization)
+  ✓ At 99%+ capacity
+
+Austin:
+  Pallet shelves used: 7,182 / 1,484 (483.9% utilization)
+  ✓ At 99%+ capacity
+
+----------------------------------------------------------------------------------------------------
+EXPANSION REQUIREMENTS
+----------------------------------------------------------------------------------------------------
+
+Sacramento:
+  Pallet      : Need    1,517 more shelves (current:    1,100)
+
+Austin:
+  Pallet      : Need    5,698 more shelves (current:    1,484)
+
+====================================================================================================
+REDISTRIBUTION ANALYSIS
+====================================================================================================
+
+Previous model (with Columbus slack allowed):
+  Columbus Pallet: 4,104 more shelves needed
+  Sacramento Pallet: 1,514 more shelves needed
+  Austin Pallet: 251 more shelves needed
+
+Current model (Columbus HARD CONSTRAINT - no expansion):
+  Columbus: MUST fit within 3,080 pallet shelves
+  Demand shifted to Sacramento and Austin (can expand)
+
+Total new shelves needed:
+  Sacramento: 1,517 shelves
+  Austin: 5,698 shelves
+  TOTAL EXPANSION: 7,214 shelves
+
+Previous total (with Columbus expansion): 5,869 shelves
+Difference: +1,345 shelves
+
+====================================================================================================

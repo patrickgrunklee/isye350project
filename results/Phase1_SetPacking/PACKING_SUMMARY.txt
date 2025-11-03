@@ -1,0 +1,45 @@
+====================================================================================================
+PHASE 1: SET PACKING OPTIMIZATION - SUMMARY
+====================================================================================================
+
+Total configurations generated: 17
+
+Configurations by storage type:
+  Bins           :    4 SKU configurations
+  Pallet         :    7 SKU configurations
+  Hazmat         :    6 SKU configurations
+
+====================================================================================================
+CONFIGURATION DETAILS
+====================================================================================================
+
+
+Austin - Hazmat:
+  SKUs: 2
+  Total packages per shelf: 50
+  Total volume per shelf: 1.99 cu ft
+  Total weight per shelf: 100.0 lbs
+
+Columbus - Bins:
+  SKUs: 4
+  Total packages per shelf: 247
+  Total volume per shelf: 1.18 cu ft
+  Total weight per shelf: 66.0 lbs
+
+Columbus - Hazmat:
+  SKUs: 2
+  Total packages per shelf: 50
+  Total volume per shelf: 1.99 cu ft
+  Total weight per shelf: 100.0 lbs
+
+Columbus - Pallet:
+  SKUs: 7
+  Total packages per shelf: 7
+  Total volume per shelf: 41.46 cu ft
+  Total weight per shelf: 169.0 lbs
+
+Sacramento - Hazmat:
+  SKUs: 2
+  Total packages per shelf: 50
+  Total volume per shelf: 1.99 cu ft
+  Total weight per shelf: 100.0 lbs

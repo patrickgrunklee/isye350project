@@ -1,0 +1,28 @@
+====================================================================================================
+PHASE 1: SET PACKING OPTIMIZATION V2 - SUMMARY
+====================================================================================================
+
+Total configurations generated: 87
+Total packing records: 182
+
+Configurations by (facility, storage_type):
+  Austin          Bins           :  10 configurations
+  Austin          Hazmat         :   2 configurations
+  Austin          Pallet         :  10 configurations
+  Austin          Racking        :   7 configurations
+  Columbus        Bins           :  10 configurations
+  Columbus        Hazmat         :   2 configurations
+  Columbus        Pallet         :  10 configurations
+  Columbus        Racking        :   7 configurations
+  Sacramento      Bins           :  10 configurations
+  Sacramento      Hazmat         :   2 configurations
+  Sacramento      Pallet         :  10 configurations
+  Sacramento      Racking        :   7 configurations
+
+====================================================================================================
+STORAGE TYPE CONSTRAINTS (Max Item Volume)
+====================================================================================================
+  Bins           :    1.000 cu ft per package
+  Racking        :    1.953 cu ft per package
+  Pallet         :   64.000 cu ft per package
+  Hazmat         :    1.953 cu ft per package

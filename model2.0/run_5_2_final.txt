@@ -1,0 +1,108 @@
+====================================================================================================
+PHASE 2: PURE-SKU PACKING MODEL (DISCRETE + FURNITURE CONTINUOUS) - 3/1 DAYS-ON-HAND
+====================================================================================================
+
+APPROACH:
+  - Pure-SKU shelves (most SKUs): Discrete item-based packing
+  - Pure-SKU shelves (furniture): Continuous packing (volume/weight only)
+  - Mixed-SKU shelves: Discrete item structure
+  - DoH = 3 days (International) / 1 day (Domestic)
+  - Traditional safety stock calculation
+
+[1/7] Loading data files...
+   ✓ Data loaded
+
+[2/7] Processing SKU details and dimensions...
+   ✓ Processed 18 SKUs with volume/weight data
+
+[3/7] Extracting demand data...
+   ✓ Loaded demand for 120 months × 18 SKUs
+
+[4/7] Processing days-on-hand (traditional safety stock)...
+
+   Days-on-Hand Calculation:
+   Formula: Safety Stock = (Monthly Demand / 21 working days) × DoH
+   This is TRADITIONAL safety stock (days of demand coverage)
+
+   International SKUs: 3.0 business days
+   Domestic SKUs:      1.0 business days
+
+[5/7] Loading shelf specifications for pure-SKU continuous packing...
+   ✓ Shelf specifications loaded
+
+[6/7] Generating pure-SKU continuous packing configurations...
+   Pure-SKU = entire shelf dedicated to one SKU (no discrete item limits)
+   ✓ Generated 153 pure-SKU continuous configurations
+   Total configurations: 209
+     - Mixed-SKU discrete: 56
+     - Pure-SKU continuous: 153
+   ✓ Saved to packing_configurations_pure_sku.csv
+
+[7/7] Loading current shelving capacity...
+
+====================================================================================================
+BUILDING GAMSPY MODEL WITH PURE-SKU CONTINUOUS PACKING
+====================================================================================================
+   ✓ Sets and parameters created
+   ✓ Variables created (Columbus has no slack - must fit in current capacity)
+   ✓ Constraints created (ALL facilities must be at 99%+ utilization if any expansion needed)
+
+====================================================================================================
+SOLVING MODEL
+====================================================================================================
+
+====================================================================================================
+RESULTS: PURE-SKU CONTINUOUS PACKING
+====================================================================================================
+
+Total slack value: 651,094.04
+
+[1] DEMAND FULFILLMENT
+  ✓ All demand can be met!
+
+[2] FACILITY UTILIZATION & EXPANSION REQUIREMENTS
+
+Columbus: (HARD CONSTRAINT - no expansion allowed)
+  Pallet shelves used: 3,080 / 3,080 (100.0% utilization)
+  ✓ At 99%+ capacity
+
+Sacramento:
+  Pallet shelves used: 1,100 / 1,100 (100.0% utilization)
+  ✓ At 99%+ capacity
+
+Austin:
+  Pallet shelves used: 7,995 / 1,484 (538.7% utilization)
+  ✓ At 99%+ capacity
+
+----------------------------------------------------------------------------------------------------
+EXPANSION REQUIREMENTS
+----------------------------------------------------------------------------------------------------
+
+Sacramento:
+  ✓ No expansion needed
+
+Austin:
+  Pallet      : Need    6,511 more shelves (current:    1,484)
+
+====================================================================================================
+REDISTRIBUTION ANALYSIS
+====================================================================================================
+
+Previous model (with Columbus slack allowed):
+  Columbus Pallet: 4,104 more shelves needed
+  Sacramento Pallet: 1,514 more shelves needed
+  Austin Pallet: 251 more shelves needed
+
+Current model (Columbus HARD CONSTRAINT - no expansion):
+  Columbus: MUST fit within 3,080 pallet shelves
+  Demand shifted to Sacramento and Austin (can expand)
+
+Total new shelves needed:
+  Sacramento: 0 shelves
+  Austin: 6,511 shelves
+  TOTAL EXPANSION: 6,511 shelves
+
+Previous total (with Columbus expansion): 5,869 shelves
+Difference: +642 shelves
+
+====================================================================================================

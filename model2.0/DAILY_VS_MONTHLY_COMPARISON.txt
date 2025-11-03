@@ -1,0 +1,303 @@
+====================================================================================================
+CRITICAL DISCOVERY: DAILY vs MONTHLY TIME GRANULARITY COMPARISON
+====================================================================================================
+
+ORIGINAL DEMAND - ALL 4 DoH SCENARIOS
+Time Period: 120 months (2026-2035)
+Model Type Comparison: Monthly Aggregation vs Daily Time Periods with Inventory Carryover
+
+====================================================================================================
+RESULTS SUMMARY
+====================================================================================================
+
+Scenario          | Monthly Model | Daily Model  | Reduction    | % Reduction
+                  | (shelves)     | (shelves)    | (shelves)    |
+------------------|---------------|--------------|--------------|-------------
+10/3 business days|     7,210     |    1,764     |    5,446     |    75.5%
+5/2 business days |     6,697     |      392     |    6,305     |    94.1%
+3/1 business days |     6,511     |        0     |    6,511     |   100.0%
+0/0 business days |     6,507     |        0     |    6,507     |   100.0%
+
+====================================================================================================
+DETAILED BREAKDOWN BY SCENARIO
+====================================================================================================
+
+[1] 10/3 Business Days DoH (International: 10 days, Domestic: 3 days)
+----------------------------------------------------------------------------------------------------
+MONTHLY MODEL:
+  - Sacramento expansion: 1,514 shelves
+  - Austin expansion: 5,696 shelves
+  - TOTAL: 7,210 shelves
+
+DAILY MODEL:
+  - Sacramento expansion: 1,514 shelves
+  - Austin expansion: 251 shelves
+  - TOTAL: 1,764 shelves
+
+REDUCTION: 5,446 shelves (75.5% less capacity needed)
+KEY INSIGHT: Daily inventory carryover reveals that Austin needs far less capacity
+
+[2] 5/2 Business Days DoH (International: 5 days, Domestic: 2 days)
+----------------------------------------------------------------------------------------------------
+MONTHLY MODEL:
+  - Sacramento expansion: 392 shelves
+  - Austin expansion: 6,305 shelves
+  - TOTAL: 6,697 shelves
+
+DAILY MODEL:
+  - Sacramento expansion: 392 shelves
+  - Austin expansion: 0 shelves (NO EXPANSION!)
+  - TOTAL: 392 shelves
+
+REDUCTION: 6,305 shelves (94.1% less capacity needed)
+KEY INSIGHT: Austin requires NO expansion with daily inventory tracking!
+
+[3] 3/1 Business Days DoH (International: 3 days, Domestic: 1 day) - RECOMMENDED
+----------------------------------------------------------------------------------------------------
+MONTHLY MODEL:
+  - Sacramento expansion: 0 shelves
+  - Austin expansion: 6,511 shelves
+  - TOTAL: 6,511 shelves
+
+DAILY MODEL:
+  - Sacramento expansion: 0 shelves
+  - Austin expansion: 0 shelves
+  - TOTAL: 0 shelves (NO EXPANSION NEEDED!)
+
+REDUCTION: 6,511 shelves (100% - NO EXPANSION REQUIRED!)
+KEY INSIGHT: Existing capacity is SUFFICIENT with daily inventory carryover!
+
+[4] 0/0 Business Days DoH (No safety stock - JIT inventory)
+----------------------------------------------------------------------------------------------------
+MONTHLY MODEL:
+  - Sacramento expansion: 0 shelves
+  - Austin expansion: 6,507 shelves
+  - TOTAL: 6,507 shelves
+
+DAILY MODEL:
+  - Sacramento expansion: 0 shelves
+  - Austin expansion: 0 shelves
+  - TOTAL: 0 shelves (NO EXPANSION NEEDED!)
+
+REDUCTION: 6,507 shelves (100% - NO EXPANSION REQUIRED!)
+KEY INSIGHT: Even with NO safety stock, daily carryover eliminates expansion needs!
+
+====================================================================================================
+CRITICAL FINDINGS
+====================================================================================================
+
+1. INVENTORY CARRYOVER IS THE DOMINANT FACTOR
+   - Monthly models cannot properly track day-to-day inventory carryover
+   - Monthly aggregation essentially treats each month as independent
+   - Daily models show inventory builds up and carries forward naturally
+   - Result: 75.5% to 100% reduction in capacity requirements!
+
+2. EXISTING CAPACITY IS SUFFICIENT FOR 3/1 AND 0/0 DoH POLICIES
+   - With daily inventory tracking, NO expansion is needed for these policies
+   - Columbus: 3,080 pallet shelves at 100% utilization
+   - Sacramento: 1,100 pallet shelves at 100% utilization
+   - Austin: 1,484 pallet shelves at 100% utilization
+   - Total existing capacity: 5,664 pallet shelves
+
+3. ONLY HIGHEST DoH POLICY (10/3) REQUIRES EXPANSION
+   - 10/3 DoH: 1,764 shelves needed (vs 7,210 monthly = 75.5% reduction)
+   - 5/2 DoH: 392 shelves needed (vs 6,697 monthly = 94.1% reduction)
+   - 3/1 DoH: 0 shelves needed (vs 6,511 monthly = 100% reduction)
+   - 0/0 DoH: 0 shelves needed (vs 6,507 monthly = 100% reduction)
+
+4. SAFETY STOCK HAS MINIMAL IMPACT (confirmed by daily model)
+   - 0/0 DoH (no safety): 0 shelves
+   - 3/1 DoH (recommended): 0 shelves
+   - 5/2 DoH: 392 shelves
+   - 10/3 DoH: 1,764 shelves
+   - Only extreme safety stock policies drive capacity needs
+
+5. MONTHLY MODELS OVER-ESTIMATED REQUIREMENTS BY 75-100%
+   - The monthly aggregation approach was fundamentally flawed
+   - It couldn't capture daily inventory dynamics
+   - Result: Massive over-estimation of capacity needs
+
+====================================================================================================
+WHY SUCH A HUGE DIFFERENCE?
+====================================================================================================
+
+MONTHLY MODEL LIMITATIONS:
+  - Demand aggregated at monthly level (120 time periods)
+  - Inventory balance: inventory[month] >= shipments[month]
+  - No carryover tracking between months
+  - Each month treated as relatively independent
+  - Required capacity for: peak_monthly_demand + safety_stock
+
+DAILY MODEL CAPABILITIES:
+  - Demand distributed daily (2,520 time periods = 120 months × 21 days)
+  - Inventory balance: inventory[day] = inventory[day-1] + deliveries[day] - shipments[day]
+  - Explicit carryover between days AND months
+  - Inventory accumulates naturally over time
+  - Required capacity for: working inventory + safety_stock
+
+EXAMPLE: July 2035 Peak Month
+  - Monthly model: Needs capacity for entire July demand + DoH in ONE snapshot
+  - Daily model: Demand spread over 21 days, inventory replenished daily, carries forward
+  - Result: Daily model needs far less peak capacity
+
+====================================================================================================
+FACILITY UTILIZATION: DAILY MODEL RESULTS
+====================================================================================================
+
+All scenarios show existing facilities at 100% utilization:
+
+Columbus (Cannot Expand):
+  - Pallet shelves: 3,080 / 3,080 (100.0%)
+  - Hard constraint: Must fit within current capacity
+  - Status: ✓ Operating at full capacity
+
+Sacramento:
+  - Pallet shelves: 1,100 / 1,100 (100.0%)
+  - Can expand: Up to 250K sqft
+  - Status: ✓ At capacity for 3/1 and 0/0 DoH
+  - Expansion needed: 392-1,514 shelves for 5/2-10/3 DoH
+
+Austin:
+  - Pallet shelves: 1,484 / 1,484 (100.0%)
+  - Can expand: Up to 200K sqft
+  - Status: ✓ At capacity for 3/1, 5/2, and 0/0 DoH
+  - Expansion needed: 251 shelves only for 10/3 DoH
+
+====================================================================================================
+STRATEGIC IMPLICATIONS
+====================================================================================================
+
+MAJOR STRATEGIC SHIFT:
+  The original analysis (monthly model) recommended 6,511 shelf expansion at Austin.
+  The corrected analysis (daily model) shows NO EXPANSION is needed for 3/1 DoH policy!
+
+REVISED RECOMMENDATIONS:
+
+OPTION A: NO EXPANSION (3/1 or 0/0 DoH) - RECOMMENDED
+  - Existing capacity is sufficient with daily inventory management
+  - Cost: $0 CapEx
+  - Requires: Improved inventory management systems and daily tracking
+  - Risk: Operating at 100% utilization leaves no buffer
+  - Suitable for: 3-day intl / 1-day domestic safety stock (or less)
+
+OPTION B: MINIMAL EXPANSION (5/2 DoH)
+  - Sacramento only: 392 pallet shelves
+  - Cost: ~$784K (392 shelves × ~$2K/shelf)
+  - Provides: Moderate safety stock buffer (5-day intl / 2-day domestic)
+  - Benefit: 94% less CapEx than originally estimated
+
+OPTION C: CONSERVATIVE EXPANSION (10/3 DoH)
+  - Sacramento: 1,514 shelves, Austin: 251 shelves
+  - Total: 1,764 shelves
+  - Cost: ~$3.5M (vs $13M originally estimated)
+  - Provides: High safety stock (10-day intl / 3-day domestic)
+  - Benefit: 75% less CapEx than originally estimated
+
+====================================================================================================
+TECHNICAL VALIDATION
+====================================================================================================
+
+MODEL VERIFICATION:
+  ✓ All daily models solved to optimality (ModelStatus.OptimalGlobal)
+  ✓ Slack values: 0.00 (perfect feasibility)
+  ✓ Solve times: < 3 minutes per scenario
+  ✓ All constraints satisfied (99%+ utilization enforced)
+
+INVENTORY CARRYOVER EQUATION (Daily Model):
+  inventory[month, day, sku, facility] =
+    inventory[month, day-1, sku, facility] +        # Yesterday's inventory
+    deliveries[month, day, sku, facility] -         # Today's deliveries
+    shipments[month, day, sku, facility]            # Today's shipments
+
+  Special case for day 1 of each month:
+    inventory[month, 1, sku, facility] =
+      inventory[month-1, 21, sku, facility] +       # Last day of previous month
+      deliveries[month, 1, sku, facility] -
+      shipments[month, 1, sku, facility]
+
+This explicit carryover tracking is what the monthly model was missing!
+
+====================================================================================================
+DATA SOURCES
+====================================================================================================
+
+All models used ORIGINAL (non-smoothed) demand data:
+  - File: Model Data/Demand Details.csv
+  - Periods: 120 months (January 2026 - December 2035)
+  - Peak months: July 2035, July 2034 (back-to-school season)
+  - Daily distribution: Uniform (monthly_demand / 21 business days)
+
+DoH Policies Tested:
+  - 10/3: Lead TIme_14_3_business_days.csv (International: 10 days, Domestic: 3 days)
+  - 5/2:  Lead TIme_5_2_business_days.csv (International: 5 days, Domestic: 2 days)
+  - 3/1:  Lead TIme_3_1_business_days.csv (International: 3 days, Domestic: 1 day)
+  - 0/0:  Lead TIme_0_0_business_days.csv (No safety stock)
+
+====================================================================================================
+CONCLUSION
+====================================================================================================
+
+BOTTOM LINE:
+  The monthly aggregation models over-estimated capacity requirements by 75-100% due to
+  inability to properly track daily inventory carryover. With daily time granularity and
+  proper inventory dynamics, existing facilities are SUFFICIENT for recommended 3/1 DoH policy.
+
+KEY TAKEAWAY:
+  NO WAREHOUSE EXPANSION IS NEEDED if InkCredible Supplies implements:
+  1. Daily inventory tracking and management
+  2. 3-day international / 1-day domestic safety stock policy
+  3. Continuous replenishment with daily deliveries
+
+COST SAVINGS:
+  - Original recommendation (monthly model): 6,511 shelves ≈ $13M CapEx
+  - Revised recommendation (daily model): 0 shelves = $0 CapEx
+  - SAVINGS: $13 MILLION in avoided warehouse expansion!
+
+This represents a fundamental shift in the strategic recommendation for InkCredible Supplies.
+The daily model reveals that operational efficiency (inventory management) is far more
+important than physical capacity expansion.
+
+====================================================================================================
+NEXT STEPS
+====================================================================================================
+
+1. VALIDATE daily model assumptions with operations team
+   - Confirm daily delivery capability from suppliers
+   - Verify uniform demand distribution is reasonable
+   - Check feasibility of 100% facility utilization
+
+2. IMPLEMENT daily inventory tracking system
+   - Real-time inventory visibility
+   - Daily replenishment planning
+   - Safety stock monitoring
+
+3. PILOT TEST 3/1 DoH policy
+   - Start with one facility (e.g., Austin)
+   - Monitor stockout rates and fill rates
+   - Adjust as needed before full rollout
+
+4. CONTINGENCY PLANNING
+   - Consider 5/2 DoH policy as backup (only 392 shelves at Sacramento)
+   - Identify temporary overflow options for extreme peaks
+   - Build flexibility into long-term strategy
+
+====================================================================================================
+MODEL FILES
+====================================================================================================
+
+Daily Time Period Models (2,520 daily periods):
+  - phase2_DAILY_10_3_doh.py
+  - phase2_DAILY_5_2_doh.py
+  - phase2_DAILY_3_1_doh.py
+  - phase2_DAILY_0_0_doh.py
+
+Monthly Aggregation Models (120 monthly periods):
+  - phase2_pure_sku_shelves_10_3_doh_ALL99pct.py
+  - phase2_pure_sku_shelves_5_2_doh_ALL99pct.py
+  - phase2_pure_sku_shelves_3_1_doh_ALL99pct.py
+  - phase2_pure_sku_shelves_0_0_doh_ALL99pct.py
+
+Results Location:
+  - model2.0/results/Phase2_DAILY/
+
+====================================================================================================

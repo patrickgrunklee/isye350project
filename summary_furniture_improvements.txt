@@ -1,0 +1,148 @@
+====================================================================================================
+WAREHOUSE OPTIMIZATION: FURNITURE CONFIGURATION IMPROVEMENTS SUMMARY
+====================================================================================================
+
+Date: Current Session
+Changes Made:
+1. Electronics (SKUE2, SKUE3) DoH reduced from 46 to 10 business days
+2. Added special volume-only pallet configurations for SKUD3 and SKUC1
+
+====================================================================================================
+RESULTS SUMMARY
+====================================================================================================
+
+Columbus Pallet Requirements:
+----------------------------------------------------------------------------------------------------
+Scenario                                 Shelves Needed      vs Current (3,080)    Reduction
+----------------------------------------------------------------------------------------------------
+Original (High DoH: 35-46 days)          30,594             +27,514 (993%)        Baseline
+After Furniture Configs (10/3 DoH)       22,580             +19,500 (733%)        26.2% reduction
+----------------------------------------------------------------------------------------------------
+
+Sacramento Pallet Requirements:
+----------------------------------------------------------------------------------------------------
+Scenario                                 Shelves Needed      vs Current (1,100)
+----------------------------------------------------------------------------------------------------
+Original (High DoH: 35-46 days)          0 (within cap)     Within capacity
+After Furniture Configs (10/3 DoH)       12,932             +11,832               Need expansion
+----------------------------------------------------------------------------------------------------
+
+Austin Pallet Requirements:
+----------------------------------------------------------------------------------------------------
+Scenario                                 Shelves Needed      vs Current (1,484)
+----------------------------------------------------------------------------------------------------
+Original (High DoH: 35-46 days)          0 (within cap)     Within capacity
+After Furniture Configs (10/3 DoH)       8,448              +6,964                Need expansion
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+FURNITURE CONFIGURATION DETAILS
+====================================================================================================
+
+SKUD3 (Desks) at Columbus:
+----------------------------------------------------------------------------------------------------
+Old Config (3D Bin Packing):  7 packages/shelf, 245 lbs total
+NEW Config (Volume-Only):     22 packages/shelf, 770 lbs total
+Improvement:                  214% more capacity per shelf
+----------------------------------------------------------------------------------------------------
+
+SKUC1 (Chairs) at Columbus:
+----------------------------------------------------------------------------------------------------
+Old Config (3D Bin Packing):  14 packages/shelf, 840 lbs total
+NEW Config (Volume-Only):     20 packages/shelf, 1,200 lbs total
+Improvement:                  43% more capacity per shelf
+----------------------------------------------------------------------------------------------------
+
+Volume Calculations (Columbus Pallet: 7 items x 64 cu ft/item = 448 cu ft total):
+----------------------------------------------------------------------------------------------------
+SKUD3: 24x36x36 inches = 18 cu ft/unit
+  - 448 / 18 = 24.9 units theoretical
+  - 22 units conservative (allows packing inefficiency)
+
+SKUC1: 48x40x20 inches = 22.2 cu ft/unit
+  - 448 / 22.2 = 20.2 units theoretical
+  - 20 units conservative
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+DAYS-ON-HAND POLICY CHANGES
+====================================================================================================
+
+International SKUs (SKUW1-3, SKUE1-3):
+----------------------------------------------------------------------------------------------------
+Old Policy:  35-46 business days (varies by facility)
+New Policy:  10 business days (14 calendar days - uniform across facilities)
+Reduction:   71-78% decrease in safety stock requirement
+----------------------------------------------------------------------------------------------------
+
+Domestic SKUs (All others):
+----------------------------------------------------------------------------------------------------
+Old Policy:  3-15 business days (varies by facility and SKU)
+New Policy:  3 business days (3 calendar days - uniform across facilities)
+Reduction:   0-80% decrease depending on SKU/facility
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+KEY FINDINGS
+====================================================================================================
+
+1. MAJOR IMPROVEMENT: 26.2% reduction in Columbus pallet shelf requirements
+   - From 30,594 shelves to 22,580 shelves
+   - Reduction of 8,014 shelves
+
+2. STILL INFEASIBLE: Columbus needs 22,580 more pallet shelves but cannot expand
+   - Current capacity: 3,080 shelves
+   - Required: 25,660 shelves
+   - Shortfall: 22,580 shelves (733% over capacity)
+
+3. NEW BOTTLENECKS CREATED:
+   - Sacramento now needs 12,932 more pallet shelves (was within capacity)
+   - Austin now needs 8,448 more pallet shelves (was within capacity)
+
+4. ROOT CAUSE: Uniform DoH policy removed per-facility flexibility
+   - Original: Sacramento had LOWER DoH for some SKUs (e.g., 3 days for textbooks vs 8 at Columbus)
+   - New: All facilities have same DoH (10 or 3 days)
+   - Result: Spread demand more evenly, creating shortfalls everywhere
+
+====================================================================================================
+NEXT STEPS TO CONSIDER
+====================================================================================================
+
+Option 1: Remove Days-on-Hand Constraint Entirely
+  - Let the model decide optimal inventory levels
+  - Only constraint: Must meet demand each period
+  - Risk: May result in very low safety stock
+
+Option 2: Use Aggregate System-Wide Days-on-Hand
+  - Require total inventory across all facilities >= DoH requirement
+  - Allow flexible allocation to facilities with capacity
+  - Maintains safety stock but allows redistribution
+
+Option 3: Accept Partial Infeasibility
+  - Run full multiperiod optimization (not just slack analysis)
+  - Allow expansion at Sacramento and Austin
+  - Maximize use of Columbus current capacity
+  - Document that Columbus needs external warehousing or product line reduction
+
+Option 4: Analyze Which SKUs are Driving Columbus Bottleneck
+  - Identify top 3-5 SKUs consuming most Columbus pallet space
+  - Consider product-specific strategies:
+    - Move specific product lines to Sacramento/Austin entirely
+    - Reduce days-on-hand for specific bulky products
+    - Outsource storage for specific SKUs
+
+====================================================================================================
+CONFIGURATION FILES UPDATED
+====================================================================================================
+
+1. packing_configurations_3d.csv
+   - Added Config 55: Columbus Pallet SKUD3 (22 units/shelf)
+   - Added Config 56: Columbus Pallet SKUC1 (20 units/shelf)
+   - Total configs: 56 (was 54)
+
+2. Lead TIme_14_3_business_days.csv
+   - Already had SKUE1, SKUE2, SKUE3 at 10 business days
+   - All domestic SKUs at 3 business days
+   - All international SKUs at 10 business days
+
+====================================================================================================

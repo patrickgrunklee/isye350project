@@ -1,0 +1,9 @@
+Assumptions ,Description,Detail
+1,Forklift Width,10 ft
+2,Requires Forklift,"Heavy Racking, Pallets"
+3,Pedestrian Lane,4 ft
+4,Pallet Details,10ft x 4.25 ft x 24 ft
+5,Racking Details ,3 ft x 1.5 ft x 6 ft
+6,Bin Details,
+7,Inbound Outbound,These two areas can be used as forklift lanes as well
+8,Inbound packages for laptops and monitors,"receive in pallets (weight 40 lb), "

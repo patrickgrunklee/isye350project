@@ -1,0 +1,540 @@
+====================================================================================================
+WAREHOUSE CAPACITY ANALYSIS BY STORAGE TYPE
+====================================================================================================
+
+[1/4] Calculating demand requirements by SKU...
+
+[2/4] Calculating inventory requirements for different DoH scenarios...
+
+[3/4] Loading current shelving capacity...
+
+[4/4] Analyzing capacity by storage type...
+
+====================================================================================================
+
+====================================================================================================
+STORAGE TYPE: Bins
+====================================================================================================
+
+  SKUs using Bins storage: 4
+    SKUW1, SKUW2, SKUW3, SKUE1
+
+  CURRENT CAPACITY BY FACILITY:
+  Facility        Shelves         Total Volume (cu ft)      Total Weight (lbs)  
+  --------------------------------------------------------------------------------
+  Columbus           647,680 shv   647,679,352,320 cu ft          42,837,555 lbs
+  Sacramento          14,400 shv                52 cu ft             432,000 lbs
+  Austin              19,688 shv                71 cu ft             590,640 lbs
+  --------------------------------------------------------------------------------
+  TOTAL              681,768 shv   647,679,352,443 cu ft          43,860,195 lbs
+
+  SCENARIO 1: 1 DAY DOMESTIC, 3 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU      Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUW2 International           3       3870.714286    11612.142857                  241.919643                  44.907407             Yes
+SKUE1 International           3       3270.795635     9812.386905                   45.427717                  57.291667             Yes
+SKUW3 International           3       3111.595635     9334.786905                  194.474727                  36.111111             Yes
+SKUW1 International           3       2403.421032     7210.263095                   75.106907                  17.708333             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 4 SKUs:
+      If ALL repacked to sell packs:Racking
+        Volume needed:              557 cu ft
+        Weight needed:           51,557 lbs
+      If ALL stored as inbound packs:
+        Volume needed:              156 cu ft
+        Weight needed:            8,110 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:         647,679,352,443 cu ft
+        Weight:              43,860,195 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization:    0.0%
+        Weight utilization:    0.1%
+        Volume EXCESS:      647,679,351,886 cu ft [OK]
+        Weight EXCESS:           43,808,638 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization:    0.0%
+        Weight utilization:    0.0%
+        Volume EXCESS:      647,679,352,287 cu ft [OK]
+        Weight EXCESS:           43,852,085 lbs [OK]
+
+      [OK] FEASIBLE with repacking
+
+  SCENARIO 2: 2 DAY DOMESTIC, 5 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU      Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUW2 International           5       3870.714286    19353.571429                  403.199405                  75.000000             Yes
+SKUE1 International           5       3270.795635    16353.978175                   75.712862                  94.907407             Yes
+SKUW3 International           5       3111.595635    15557.978175                  324.124545                  60.185185             Yes
+SKUW1 International           5       2403.421032    12017.105159                  125.178179                  29.166667             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 4 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:              928 cu ft
+        Weight needed:           85,929 lbs
+      If ALL stored as inbound packs:
+        Volume needed:              259 cu ft
+        Weight needed:           13,480 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:         647,679,352,443 cu ft
+        Weight:              43,860,195 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization:    0.0%
+        Weight utilization:    0.2%
+        Volume EXCESS:      647,679,351,515 cu ft [OK]
+        Weight EXCESS:           43,774,267 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization:    0.0%
+        Weight utilization:    0.0%
+        Volume EXCESS:      647,679,352,184 cu ft [OK]
+        Weight EXCESS:           43,846,715 lbs [OK]
+
+      [OK] FEASIBLE with repacking
+
+  SCENARIO 3: 3 DAY DOMESTIC, 7 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU      Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUW2 International           7       3870.714286    27095.000000                  564.479167                 104.629630             Yes
+SKUE1 International           7       3270.795635    22895.569444                  105.998007                 132.523148             Yes
+SKUW3 International           7       3111.595635    21781.169444                  453.774363                  84.259259             Yes
+SKUW1 International           7       2403.421032    16823.947222                  175.249450                  40.625000             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 4 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:            1,300 cu ft
+        Weight needed:          120,300 lbs
+      If ALL stored as inbound packs:
+        Volume needed:              362 cu ft
+        Weight needed:           18,825 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:         647,679,352,443 cu ft
+        Weight:              43,860,195 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization:    0.0%
+        Weight utilization:    0.3%
+        Volume EXCESS:      647,679,351,144 cu ft [OK]
+        Weight EXCESS:           43,739,895 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization:    0.0%
+        Weight utilization:    0.0%
+        Volume EXCESS:      647,679,352,081 cu ft [OK]
+        Weight EXCESS:           43,841,370 lbs [OK]
+
+      [OK] FEASIBLE with repacking
+
+====================================================================================================
+STORAGE TYPE: Racking
+====================================================================================================
+
+  SKUs using Racking storage: 5
+    SKUA3, SKUT1, SKUT4, SKUD1, SKUC1
+
+  CURRENT CAPACITY BY FACILITY:
+  Facility        Shelves         Total Volume (cu ft)      Total Weight (lbs)  
+  --------------------------------------------------------------------------------
+  Columbus            15,600 shv               244 cu ft           1,560,000 lbs
+  Sacramento          13,078 shv               204 cu ft           1,307,800 lbs
+  Austin              11,424 shv               178 cu ft           1,142,400 lbs
+  --------------------------------------------------------------------------------
+  TOTAL               40,102 shv               627 cu ft           4,010,200 lbs
+
+  SCENARIO 1: 1 DAY DOMESTIC, 3 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUC1 Domestic           1       4779.876190     4779.876190               106219.470899              106222.222222              No
+SKUD1 Domestic           1       4421.005556     4421.005556                11052.513889               11055.000000              No
+SKUA3 Domestic           1       3356.422222     3356.422222                  839.105556                   8.500000             Yes
+SKUT1 Domestic           1       2412.180556     2412.180556                  586.293885                 586.979167             Yes
+SKUT4 Domestic           1       1954.774206     1954.774206                  475.118731                 475.416667             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 5 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:          119,173 cu ft
+        Weight needed:          487,923 lbs
+      If ALL stored as inbound packs:
+        Volume needed:          118,348 cu ft
+        Weight needed:          456,225 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                     627 cu ft
+        Weight:               4,010,200 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 19019.1%
+        Weight utilization:   12.2%
+        Volume SHORTFALL:           118,546 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            3,522,277 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 18887.5%
+        Weight utilization:   11.4%
+        Volume SHORTFALL:           117,722 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            3,553,975 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+  SCENARIO 2: 2 DAY DOMESTIC, 5 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUC1 Domestic           2       4779.876190     9559.752381               212438.941799              212444.444444              No
+SKUD1 Domestic           2       4421.005556     8842.011111                22105.027778               22107.500000              No
+SKUA3 Domestic           2       3356.422222     6712.844444                 1678.211111                  17.000000             Yes
+SKUT1 Domestic           2       2412.180556     4824.361111                 1172.587770                1173.229167             Yes
+SKUT4 Domestic           2       1954.774206     3909.548413                  950.237461                 950.833333             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 5 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:          238,345 cu ft
+        Weight needed:          975,845 lbs
+      If ALL stored as inbound packs:
+        Volume needed:          236,693 cu ft
+        Weight needed:          912,395 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                     627 cu ft
+        Weight:               4,010,200 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 38038.2%
+        Weight utilization:   24.3%
+        Volume SHORTFALL:           237,718 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            3,034,355 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 37774.6%
+        Weight utilization:   22.8%
+        Volume SHORTFALL:           236,066 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            3,097,805 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+  SCENARIO 3: 3 DAY DOMESTIC, 7 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUC1 Domestic           3       4779.876190    14339.628571               318658.412698              318666.666667              No
+SKUD1 Domestic           3       4421.005556    13263.016667                33157.541667               33160.000000              No
+SKUA3 Domestic           3       3356.422222    10069.266667                 2517.316667                  25.250000             Yes
+SKUT1 Domestic           3       2412.180556     7236.541667                 1758.881655                1759.479167             Yes
+SKUT4 Domestic           3       1954.774206     5864.322619                 1425.356192                1425.520833             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 5 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:          357,518 cu ft
+        Weight needed:        1,463,768 lbs
+      If ALL stored as inbound packs:
+        Volume needed:          355,037 cu ft
+        Weight needed:        1,368,530 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                     627 cu ft
+        Weight:               4,010,200 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 57057.3%
+        Weight utilization:   36.5%
+        Volume SHORTFALL:           356,891 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            2,546,432 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 56661.4%
+        Weight utilization:   34.1%
+        Volume SHORTFALL:           354,410 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            2,641,670 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+====================================================================================================
+STORAGE TYPE: Pallet
+====================================================================================================
+
+  SKUs using Pallet storage: 7
+    SKUT2, SKUT3, SKUD2, SKUD3, SKUC2, SKUE2, SKUE3
+
+  CURRENT CAPACITY BY FACILITY:
+  Facility        Shelves         Total Volume (cu ft)      Total Weight (lbs)  
+  --------------------------------------------------------------------------------
+  Columbus             3,080 shv             1,818 cu ft           1,848,000 lbs
+  Sacramento           1,100 shv               325 cu ft             660,000 lbs
+  Austin               1,484 shv               657 cu ft             890,400 lbs
+  --------------------------------------------------------------------------------
+  TOTAL                5,664 shv             2,800 cu ft           3,398,400 lbs
+
+  SCENARIO 1: 1 DAY DOMESTIC, 3 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU      Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUE2 International           3       3659.456349    10978.369048                 2668.353588               11712.000000             Yes
+SKUD3      Domestic           1       3860.838095     3860.838095                69495.085714              247104.000000              No
+SKUC2      Domestic           1       3858.443254     3858.443254                 8038.423446               10304.000000              No
+SKUT2      Domestic           1       3092.554365     3092.554365                  751.662519                1306.666667             Yes
+SKUD2      Domestic           1       2730.968254     2730.968254                54619.365079              174784.000000              No
+SKUT3      Domestic           1       2185.266270     2185.266270                  531.141107                 933.333333             Yes
+SKUE3 International           3        425.085317     1275.255952                  826.554784                3456.000000             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 7 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:          136,931 cu ft
+        Weight needed:          566,299 lbs
+      If ALL stored as inbound packs:
+        Volume needed:          449,600 cu ft
+        Weight needed:          535,120 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                   2,800 cu ft
+        Weight:               3,398,400 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 4890.9%
+        Weight utilization:   16.7%
+        Volume SHORTFALL:           134,131 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            2,832,101 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 16058.9%
+        Weight utilization:   15.7%
+        Volume SHORTFALL:           446,800 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            2,863,280 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+  SCENARIO 2: 2 DAY DOMESTIC, 5 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU      Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUE2 International           5       3659.456349    18297.281746                 4447.255980               19520.000000             Yes
+SKUD3      Domestic           2       3860.838095     7721.676190               138990.171429              494208.000000              No
+SKUC2      Domestic           2       3858.443254     7716.886508                16076.846892               20608.000000              No
+SKUT2      Domestic           2       3092.554365     6185.108730                 1503.325039                2586.666667             Yes
+SKUD2      Domestic           2       2730.968254     5461.936508               109238.730159              349568.000000              No
+SKUT3      Domestic           2       2185.266270     4370.532540                 1062.282215                1840.000000             Yes
+SKUE3 International           5        425.085317     2125.426587                 1377.591307                5696.000000             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 7 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:          272,696 cu ft
+        Weight needed:        1,096,946 lbs
+      If ALL stored as inbound packs:
+        Volume needed:          894,027 cu ft
+        Weight needed:        1,029,820 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                   2,800 cu ft
+        Weight:               3,398,400 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 9740.2%
+        Weight utilization:   32.3%
+        Volume SHORTFALL:           269,897 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            2,301,454 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 31933.1%
+        Weight utilization:   30.3%
+        Volume SHORTFALL:           891,227 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            2,368,580 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+  SCENARIO 3: 3 DAY DOMESTIC, 7 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU      Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUE2 International           7       3659.456349    25616.194444                 6226.158372               27328.000000             Yes
+SKUD3      Domestic           3       3860.838095    11582.514286               208485.257143              741312.000000              No
+SKUC2      Domestic           3       3858.443254    11575.329762                24115.270337               30912.000000              No
+SKUT2      Domestic           3       3092.554365     9277.663095                 2254.987558                3866.666667             Yes
+SKUD2      Domestic           3       2730.968254     8192.904762               163858.095238              524352.000000              No
+SKUT3      Domestic           3       2185.266270     6555.798810                 1593.423322                2746.666667             Yes
+SKUE3 International           7        425.085317     2975.597222                 1928.627829                7936.000000             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 7 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:          408,462 cu ft
+        Weight needed:        1,627,594 lbs
+      If ALL stored as inbound packs:
+        Volume needed:        1,338,453 cu ft
+        Weight needed:        1,524,520 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                   2,800 cu ft
+        Weight:               3,398,400 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 14589.6%
+        Weight utilization:   47.9%
+        Volume SHORTFALL:           405,662 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,770,806 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 47807.2%
+        Weight utilization:   44.9%
+        Volume SHORTFALL:         1,335,654 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,873,880 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+====================================================================================================
+STORAGE TYPE: Hazmat
+====================================================================================================
+
+  SKUs using Hazmat storage: 2
+    SKUA1, SKUA2
+
+  CURRENT CAPACITY BY FACILITY:
+  Facility        Shelves         Total Volume (cu ft)      Total Weight (lbs)  
+  --------------------------------------------------------------------------------
+  Columbus             9,200 shv                 0 cu ft             920,000 lbs
+  Sacramento             948 shv                 0 cu ft              94,800 lbs
+  Austin               2,680 shv                 0 cu ft             268,000 lbs
+  --------------------------------------------------------------------------------
+  TOTAL               12,828 shv                 0 cu ft           1,282,800 lbs
+
+  SCENARIO 1: 1 DAY DOMESTIC, 3 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUA2 Domestic           1       1838.073810     1838.073810                   74.459008                  21.469907             Yes
+SKUA1 Domestic           1       1112.660714     1112.660714                   10.302414                   5.425347             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 2 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:               85 cu ft
+        Weight needed:            5,901 lbs
+      If ALL stored as inbound packs:
+        Volume needed:               27 cu ft
+        Weight needed:            1,236 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                       0 cu ft
+        Weight:               1,282,800 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 999999.0%
+        Weight utilization:    0.5%
+        Volume SHORTFALL:                85 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,276,899 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 999999.0%
+        Weight utilization:    0.1%
+        Volume SHORTFALL:                27 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,281,564 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+  SCENARIO 2: 2 DAY DOMESTIC, 5 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUA2 Domestic           2       1838.073810     3676.147619                  148.918017                  42.939815             Yes
+SKUA1 Domestic           2       1112.660714     2225.321429                   20.604828                  10.778356             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 2 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:              170 cu ft
+        Weight needed:           11,803 lbs
+      If ALL stored as inbound packs:
+        Volume needed:               54 cu ft
+        Weight needed:            2,464 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                       0 cu ft
+        Weight:               1,282,800 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 999999.0%
+        Weight utilization:    0.9%
+        Volume SHORTFALL:               170 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,270,997 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 999999.0%
+        Weight utilization:    0.2%
+        Volume SHORTFALL:                54 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,280,336 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+  SCENARIO 3: 3 DAY DOMESTIC, 7 DAY INTERNATIONAL
+  --------------------------------------------------------------------------------
+
+    SKU-LEVEL REQUIREMENTS:
+      SKU Supplier  DoH (days)  Avg Daily Demand  Required Units  Volume if Repacked (cu ft)  Volume if Inbound (cu ft) Can Consolidate
+SKUA2 Domestic           3       1838.073810     5514.221429                  223.377025                  64.004630             Yes
+SKUA1 Domestic           3       1112.660714     3337.982143                   30.907242                  16.131366             Yes
+
+    TOTAL REQUIREMENTS ACROSS ALL 2 SKUs:
+      If ALL repacked to sell packs:
+        Volume needed:              254 cu ft
+        Weight needed:           17,704 lbs
+      If ALL stored as inbound packs:
+        Volume needed:               80 cu ft
+        Weight needed:            3,680 lbs
+
+    CAPACITY ANALYSIS:
+      Current total capacity:
+        Volume:                       0 cu ft
+        Weight:               1,282,800 lbs
+
+      BEST CASE (all items repacked to sell packs):
+        Volume utilization: 999999.0%
+        Weight utilization:    1.4%
+        Volume SHORTFALL:               254 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,265,096 lbs [OK]
+
+      WORST CASE (all items stored as inbound packs):
+        Volume utilization: 999999.0%
+        Weight utilization:    0.3%
+        Volume SHORTFALL:                80 cu ft [X] OVER CAPACITY
+        Weight EXCESS:            1,279,120 lbs [OK]
+
+      [!] INFEASIBLE even with optimal repacking!
+          Bottleneck: VOLUME
+
+====================================================================================================
+ANALYSIS COMPLETE
+====================================================================================================

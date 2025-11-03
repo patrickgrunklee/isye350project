@@ -1,0 +1,6 @@
+Operational Hours,Inbound & Outbound Requirements
+8 hour shift,All deliveries from suppliers arrive at 8am local time. All shipments to customers must occur before 5pm local time.
+1-2 shifts per day (8 hours per shift) ,"All packages > 200 lbs or received on a pallet are LTL, remaining are parcel. "
+Assume 4.16666666 weeks per month (50 weeks / 12 months),1 truckload per supplier can be received per day (shipments do not need to completely fill a 53' truck trailer).
+Assume 21 working business days per month (5 days/wk * 50 wks/yr / 12 mo/yr),"A facility expansion, renovation, or new facility will not cause current operational delays and is assumed to be smooth transition once implemented."
+Assume 50 operational weeks per year ,

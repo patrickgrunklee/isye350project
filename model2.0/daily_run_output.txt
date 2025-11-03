@@ -1,0 +1,64 @@
+====================================================================================================
+PHASE 2: DAILY TIME PERIODS MODEL - 3/1 DAYS-ON-HAND
+====================================================================================================
+
+APPROACH:
+  - Daily time granularity: 120 months × 21 days = 2,520 time periods
+  - Daily inventory carryover between days and months
+  - Inbound pack quantities converted to sell pack units
+  - Uniform daily demand distribution (monthly_demand / 21)
+  - DoH: International: 3 business days | Domestic: 1 business day
+  - Max solve time: 3 minutes
+
+[1/8] Loading data files...
+   ✓ Data loaded
+
+[2/8] Processing SKU details with inbound pack conversion...
+   ✓ Processed 18 SKUs with inbound pack conversion
+   Example: SKUW1 - Inbound: 144 units = 12.0 sell packs
+
+[3/8] Extracting demand data and distributing daily...
+   ✓ Loaded demand for 120 months × 21 days × 18 SKUs
+   Total daily time periods: 2520 = 2,520
+
+[4/8] Processing days-on-hand (daily safety stock)...
+   International SKUs: 3.0 business days
+   Domestic SKUs:      1.0 business days
+
+[5/8] Loading current shelving capacity...
+
+[6/8] Processing packing configurations...
+   ✓ 209 configurations ready
+
+[7/8] Building GAMSPy model with daily time structure...
+====================================================================================================
+BUILDING GAMSPY MODEL
+====================================================================================================
+   ✓ Sets created (including daily time dimension)
+   ✓ Parameters created (daily demand indexed by month and day)
+   ✓ Variables created (daily inventory, shipments, deliveries)
+   ✓ Constraints created (daily inventory balance with carryover)
+
+[8/8] Solving model with 3-minute time limit...
+====================================================================================================
+SOLVING MODEL
+====================================================================================================
+
+Model size:
+  - Time periods: 2,520 (120 months × 21 days)
+  - SKUs: 18
+  - Facilities: 3
+  - Configurations: 209
+  - Estimated daily inventory variables: 136,080
+  - Max solve time: 180 seconds
+
+Traceback (most recent call last):
+  File "C:\Users\patri\OneDrive - UW-Madison\ISYE 350\Model\model2.0\phase2_DAILY_3_1_doh.py", line 378, in <module>
+    solve_options.res_lim = MAX_SOLVE_TIME  # 3 minutes
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\patri\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 997, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+                             ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\patri\AppData\Roaming\Python\Python313\site-packages\pydantic\main.py", line 1044, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "Options" object has no field "res_lim"

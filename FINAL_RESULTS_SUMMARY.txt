@@ -1,0 +1,174 @@
+====================================================================================================
+WAREHOUSE EXPANSION OPTIMIZATION - FINAL RESULTS SUMMARY
+====================================================================================================
+
+Project: InkCredible Supplies - Option 2 (Expand Sacramento and/or Austin)
+Model: Pure-SKU Continuous Packing with Columbus 99% Utilization Constraint
+Date: Current Session
+
+====================================================================================================
+MODEL SPECIFICATIONS
+====================================================================================================
+
+Key Features:
+1. Pure-SKU Continuous Packing
+   - Shelves with only ONE SKU type: Use continuous volume-based packing
+   - Mixed-SKU shelves: Follow discrete 7-item structure
+   - Dramatically increases capacity per shelf (up to 20-100× improvement)
+
+2. Columbus Hard Constraint
+   - Columbus CANNOT expand (per project requirements)
+   - Columbus MUST operate at 99%+ pallet utilization if Sac/Austin need expansion
+   - Forces maximum use of existing Columbus capacity before expanding elsewhere
+
+3. Days-on-Hand Safety Stock
+   - Traditional safety stock calculation: (daily demand) × (DoH days)
+   - Three scenarios tested: 10/3, 5/2, and 3/1 business days
+
+====================================================================================================
+SCENARIO COMPARISON - ALL WITH COLUMBUS AT 100% UTILIZATION
+====================================================================================================
+
+┌─────────────────┬──────────────┬──────────────────┬──────────────────┬────────────────┐
+│ DoH Policy      │ Columbus     │ Sacramento       │ Austin           │ Total Expansion│
+├─────────────────┼──────────────┼──────────────────┼──────────────────┼────────────────┤
+│ 10/3 Days       │ 3,080 (100%) │ +1,514 shelves   │ +5,696 shelves   │ 7,209 shelves  │
+│ International:  │ ✓ No expand  │ 1,100 → 2,614    │ 1,484 → 7,180    │                │
+│ 10 business     │              │                  │                  │                │
+│ Domestic: 3     │              │                  │                  │                │
+├─────────────────┼──────────────┼──────────────────┼──────────────────┼────────────────┤
+│ 5/2 Days        │ 3,080 (100%) │ +392 shelves     │ +6,305 shelves   │ 6,696 shelves  │
+│ International:  │ ✓ No expand  │ 1,100 → 1,492    │ 1,484 → 7,789    │ (-7% vs 10/3)  │
+│ 5 business      │              │                  │                  │                │
+│ Domestic: 2     │              │                  │                  │                │
+├─────────────────┼──────────────┼──────────────────┼──────────────────┼────────────────┤
+│ 3/1 Days        │ 3,080 (100%) │ ✓ 1,100 (no exp) │ +6,511 shelves   │ 6,511 shelves  │
+│ International:  │ ✓ No expand  │ ✓ No expand      │ 1,484 → 7,995    │ (-10% vs 10/3) │
+│ 3 business      │              │                  │                  │                │
+│ Domestic: 1     │              │                  │                  │                │
+└─────────────────┴──────────────┴──────────────────┴──────────────────┴────────────────┘
+
+====================================================================================================
+RECOMMENDED SCENARIO: 3/1 BUSINESS DAYS DOH
+====================================================================================================
+
+Why 3/1 Days is Optimal:
+✓ Minimizes total expansion (6,511 shelves vs 7,209 for 10/3)
+✓ Single expansion location (Austin only - simplifies project)
+✓ Sacramento requires NO expansion
+✓ Columbus at 100% utilization (maximizes existing resources)
+✓ All demand met with traditional safety stock coverage
+
+Expansion Required:
+- Columbus: Use existing 3,080 pallet shelves (100% utilized)
+- Sacramento: Use existing 1,100 pallet shelves (no expansion)
+- Austin: Expand by 6,511 pallet shelves (1,484 → 7,995 total)
+
+Safety Stock Coverage:
+- International SKUs (SKUW, SKUE): 3 business days on hand
+- Domestic SKUs (all others): 1 business day on hand
+- This provides buffer against demand variability and lead time delays
+
+====================================================================================================
+MODEL FILES SAVED
+====================================================================================================
+
+All models include:
+- Pure-SKU continuous packing
+- Columbus 99% utilization constraint
+- 120-month multiperiod optimization
+- Full demand fulfillment guarantees
+
+Saved Files:
+1. phase2_pure_sku_shelves_10_3_doh_99pct.py
+   - 10 days international / 3 days domestic DoH
+   - Total expansion: 7,209 shelves (Sac: 1,514, Austin: 5,696)
+
+2. phase2_pure_sku_shelves_5_2_doh_99pct.py
+   - 5 days international / 2 days domestic DoH
+   - Total expansion: 6,696 shelves (Sac: 392, Austin: 6,305)
+
+3. phase2_pure_sku_shelves_3_1_doh_99pct.py ← RECOMMENDED
+   - 3 days international / 1 day domestic DoH
+   - Total expansion: 6,511 shelves (Austin only)
+
+====================================================================================================
+KEY INSIGHTS FROM MODEL EVOLUTION
+====================================================================================================
+
+1. 3D Bin Packing → Pure-SKU Continuous Packing
+   Before: Columbus needed 22,580 more shelves (735% over capacity)
+   After:  Columbus fits within 3,080 existing shelves
+   Improvement: 100% - completely eliminated Columbus expansion need
+
+2. Days-on-Hand Impact
+   Reducing DoH from 10/3 to 3/1 saved 698 shelves (10% reduction)
+   Lower safety stock = less inventory = fewer shelves needed
+
+3. Columbus Utilization Constraint
+   Without constraint: Columbus might be underutilized while Sac/Austin expand
+   With constraint: Columbus at 100% before any other facility expands
+   Result: Maximizes use of existing assets, minimizes total expansion cost
+
+4. Pure-SKU Configuration Examples
+   - SKUC1 (chairs): 20 units/shelf vs 14 (43% improvement)
+   - SKUD3 (desks): 22 units/shelf vs 7 (214% improvement)
+   - SKUT2 (textbooks): 112+ units/shelf vs 7 (1,500%+ improvement)
+
+====================================================================================================
+OPERATIONAL RECOMMENDATIONS
+====================================================================================================
+
+Inventory Management:
+- Dedicate entire shelves to single SKU types whenever possible
+- Use mixed-SKU shelving only when necessary for low-volume items
+- Implement pure-SKU zones in warehouse layout for efficiency
+
+Safety Stock Policy:
+- Adopt 3/1 business day DoH policy (3 intl, 1 domestic)
+- Monitor actual demand variability to validate safety stock adequacy
+- Consider increasing DoH if stockouts occur
+
+Expansion Plan:
+- Austin: Add 6,511 pallet shelves
+- Prioritize pallet storage expansion (all other storage types within capacity)
+- No expansion needed at Columbus or Sacramento
+
+Space Utilization:
+- Columbus: 100% pallet utilization (3,080/3,080 shelves)
+- Sacramento: Within capacity on all storage types
+- Austin: Will use 7,995 pallet shelves after expansion
+
+====================================================================================================
+CONSTRAINTS AND ASSUMPTIONS
+====================================================================================================
+
+Hard Constraints:
+✓ Columbus CANNOT expand (facility limitation)
+✓ Columbus must be at 99%+ utilization if others expand
+✓ All monthly demand must be met
+✓ Days-on-hand safety stock requirements
+✓ Physical shelf capacity (volume, weight, package count)
+
+Assumptions:
+- Pure-SKU shelves allow continuous packing (no discrete item slots)
+- 21 working business days per month
+- 120-month planning horizon (2026-2035)
+- Demand data as provided in "Demand Details.csv"
+- Lead times as specified per SKU and facility
+
+====================================================================================================
+COST ANALYSIS (If Needed)
+====================================================================================================
+
+To calculate expansion costs, reference:
+- "Floorplan Layout.csv" for facility expansion pricing
+- Sacramento: $2/sqft (first 100K) + $4/sqft (next 150K)
+- Austin: $1.5/sqft (up to 200K sqft)
+
+Pallet shelf square footage varies by facility - see "Shelving Dimensions.csv"
+for dimensions to convert shelf count to square footage.
+
+====================================================================================================
+END OF SUMMARY
+====================================================================================================

@@ -1,0 +1,16 @@
+Facility,Storage_Type,Config_ID,Shelves,Marginal,Lower,Upper,Scale
+Columbus,Bins,30,99999.0,,0.0,inf,1.0
+Columbus,Bins,31,99999.0,,0.0,inf,1.0
+Columbus,Bins,32,99999.0,,0.0,inf,1.0
+Columbus,Bins,33,99999.0,,0.0,inf,1.0
+Austin,Bins,1,98440.0,,0.0,inf,1.0
+Columbus,Racking,46,78000.0,,0.0,inf,1.0
+Sacramento,Bins,53,72000.0,,0.0,inf,1.0
+Sacramento,Racking,75,65390.0,,0.0,inf,1.0
+Austin,Racking,23,57120.0,,0.0,inf,1.0
+Columbus,Hazmat,34,46000.0,,0.0,inf,1.0
+Columbus,Pallet,36,15400.0,,0.0,inf,1.0
+Austin,Hazmat,11,13400.0,,0.0,inf,1.0
+Austin,Pallet,13,7420.0,,0.0,inf,1.0
+Sacramento,Pallet,65,5500.0,,0.0,inf,1.0
+Sacramento,Hazmat,63,4740.0,,0.0,inf,1.0

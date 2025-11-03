@@ -1,0 +1,19 @@
+SKU Number,Supplier Type,Sell Pack Quantity,Sell Pack Dimensions (in),Sell Pack Weight,Can be packed out in a box with other materials (consolidation)?,Inbound Pack Quantity,Inbound Pack Dimensions,Inbound Pack Weight,Storage Method
+SKUW1,International,12 (1 pack),3 x 6 x 1,1 lbs,Yes,144 (12 packs),10 x 10 x 6,15 lbs,Bins
+SKUW2,International,12 (1 pack),6 x 3 x 2,2 lbs,Yes,120 (10 packs),10 x 10 x 8,25 lbs,Bins
+SKUW3,International,12 (1 pack),6 x 3 x 2,2 lbs,Yes,120 (10 packs),10 x 10 x 8,25 lbs,Bins
+SKUA1,Domestic,3 (1 pack),4 x 4 x 1,2 lbs,Yes,15 (3 packs),5 x 5 x 5,8 lbs,Hazmat
+SKUA2,Domestic,7 (1 pack),7 x 5 x 2,2 lbs,Yes,35 (5 packs),10 x 10 x 7,12 lbs,Hazmat
+SKUA3,Domestic,100 (1 pack),9 x 12 x 4,10 lbs,Yes,100 (1 pack),9 x 12 x 4,10 lbs,Racking
+SKUT1,Domestic,1,10 x 14 x 3,8 lbs,Yes,3,10 x 14 x 9,25 lbs,Racking
+SKUT2,Domestic,1,10 x 14 x 3,8 lbs,Yes,64,48 x 48x 20,550 lbs,Pallet
+SKUT3,Domestic,1,10 x 14 x 3,8 lbs,Yes,64,48 x 48x 20,550 lbs,Pallet
+SKUT4,Domestic,1,10 x 14 x 3,8 lbs,Yes,3,10 x 14 x 9,25 lbs,Racking
+SKUD1,Domestic,1 (sold as parts),36 x 24 x 5,30 lbs,No,1 (received as parts),36 x 24 x 5,30 lbs,Pallet
+SKUD2,Domestic,1,48 x 36 x 20,75 lbs,No,1,48 x 48 x 48,75 lbs,Pallet
+SKUD3,Domestic,1,24 x 36 x 36,35 lbs,No,1,48 x 48 x 48,35 lbs,Pallet
+SKUC1,Domestic,1 (sold as parts),48 x 40 x 20,60 lbs,No,1 (received as parts),48 x 40 x 20,60 lbs,Pallet
+SKUC2,Domestic,3 (1 pack),20 x 36 x 5,20 lbs,No,24 (8 packs),48 x 48 x 48,200 lbs,Pallet
+SKUE1,International,1,2 x 2 x 2,0.25 lbs,Yes,100,10 x 10 x 10,30 lbs,bins
+SKUE2,International,1,14 x 10 x 3,8 lbs,Yes,60,48 x 48 x 48,520 lb,Pallet
+SKUE3,International,1,20 x 14 x 4,15 lbs,Yes,24,48 x 48 x 48,400 lb,Pallet

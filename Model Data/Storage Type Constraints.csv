@@ -1,0 +1,5 @@
+Storage Type,Max Item Length (in),Max Item Width (in),Max Item Height (in),Max Item Volume (cu ft)
+Bins,12,12,12,1.0
+Racking,15,15,15,1.953125
+Pallet,48,48,48,64.0
+Hazmat,15,15,15,1.953125
