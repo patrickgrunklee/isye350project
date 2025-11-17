@@ -1,0 +1,88 @@
+%-------------------------------------------------------------
+% Slide Title: Set Packing Optimization Model
+%-------------------------------------------------------------
+
+\textbf{Set Packing Optimization Model}
+
+\textbf{Problem Overview:} Determine how many packages of each SKU to place on a shelf to 
+maximize utilization while respecting shelf limits and ensuring every SKU is represented.
+
+%-------------------------------------------------------------
+% Indices & Sets
+%-------------------------------------------------------------
+\textbf{Indices and Sets}
+
+\[
+i \in S \quad \text{(SKUs assigned to this shelf)}
+\]
+
+%-------------------------------------------------------------
+% Parameters
+%-------------------------------------------------------------
+\textbf{Parameters}
+
+\[
+v_i \quad \text{volume per package (cu ft)}
+\]
+\[
+w_i \quad \text{weight per package (lb)}
+\]
+\[
+V \quad \text{shelf volume capacity}
+\]
+\[
+W \quad \text{shelf weight capacity}
+\]
+\[
+N \quad \text{maximum packages allowed}
+\]
+
+%-------------------------------------------------------------
+% Decision Variables
+%-------------------------------------------------------------
+\textbf{Decision Variable}
+
+\[
+x_i \in \mathbb{Z}_{+}, \quad x_i \ge 1
+\]
+
+Number of packages of SKU \(i\).
+
+%-------------------------------------------------------------
+% Objective Function
+%-------------------------------------------------------------
+\textbf{Objective Function: Maximize Shelf Utilization}
+
+\[
+\max \; \frac{1}{2}
+\left(
+\frac{\sum_{i \in S} v_i x_i}{V}
++
+\frac{\sum_{i \in S} w_i x_i}{W}
+\right)
+\]
+
+%-------------------------------------------------------------
+% Constraints
+%-------------------------------------------------------------
+\textbf{Constraints}
+
+\text{(1) Volume Capacity}
+\[
+\sum_{i \in S} v_i x_i \le V
+\]
+
+\text{(2) Weight Capacity}
+\[
+\sum_{i \in S} w_i x_i \le W
+\]
+
+\text{(3) Maximum Packages}
+\[
+\sum_{i \in S} x_i \le N
+\]
+
+\text{(4) SKU Representation}
+\[
+x_i \ge 1 \qquad \forall i \in S
+\]

@@ -1,0 +1,197 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+
+\title{Phase 1: Set Packing Optimization Model\\
+Mathematical Formulation}
+\author{ISyE 350 - InkCredible Supplies Warehouse Optimization}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Description}
+
+The Set Packing Optimization Model solves the optimal packing configuration for each \textbf{(facility, storage type)} combination. The goal is to determine how many packages of each SKU to place on a single shelf to maximize utilization while ensuring all SKUs are represented.
+
+\subsection{Model Context}
+
+\begin{itemize}[itemsep=0pt]
+    \item \textbf{Scope:} One optimization model is solved independently for each (facility, storage type) pair
+    \item \textbf{Facilities:} Columbus, Sacramento, Austin
+    \item \textbf{Storage Types:} Bins, Racking, Pallet, Hazmat
+    \item \textbf{Output:} Optimal package counts per shelf that minimize wasted space
+    \item \textbf{Constraint:} Each SKU using a storage type must have at least 1 package on the shelf
+\end{itemize}
+
+\section{Mathematical Formulation}
+
+For a given facility $f$ and storage type $st$, the complete optimization model is:
+
+\vspace{0.5cm}
+
+\noindent\textbf{SETS AND INDICES}
+
+\begin{align*}
+i \in S \quad &\text{SKUs assigned to storage type } st \text{ at facility } f
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{PARAMETERS}
+
+\begin{align*}
+v_i &\quad \text{Volume per package of SKU } i \text{ (cubic feet)} \\
+w_i &\quad \text{Weight per package of SKU } i \text{ (lbs)} \\
+V &\quad \text{Shelf volume capacity (cubic feet)} \\
+W &\quad \text{Shelf weight capacity (lbs)} \\
+N &\quad \text{Maximum number of packages per shelf}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{DECISION VARIABLES}
+
+\begin{align*}
+x_i &\in \mathbb{Z}_+, \quad x_i \geq 1 \quad \forall i \in S \\
+&\text{Number of packages of SKU } i \text{ to place on one shelf}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{OBJECTIVE FUNCTION}
+
+\begin{equation}
+\max \quad Z = \frac{1}{2} \left( \frac{\sum_{i \in S} v_i x_i}{V} + \frac{\sum_{i \in S} w_i x_i}{W} \right)
+\end{equation}
+
+Maximize average shelf utilization (volume and weight).
+
+\vspace{0.3cm}
+
+\noindent\textbf{CONSTRAINTS}
+
+\begin{align}
+\sum_{i \in S} v_i x_i &\leq V && \text{(Volume capacity)} \\
+\sum_{i \in S} w_i x_i &\leq W && \text{(Weight capacity)} \\
+\sum_{i \in S} x_i &\leq N && \text{(Maximum package count)} \\
+x_i &\geq 1 \quad \forall i \in S && \text{(SKU representation)}
+\end{align}
+
+\subsection{Constraint Descriptions}
+
+\begin{itemize}
+    \item \textbf{Volume Capacity (2):} Total volume used cannot exceed shelf volume capacity
+    \item \textbf{Weight Capacity (3):} Total weight cannot exceed shelf weight capacity
+    \item \textbf{Maximum Package Count (4):} Total packages cannot exceed maximum allowed per shelf
+    \item \textbf{SKU Representation (5):} Each SKU must have at least one package on the shelf
+\end{itemize}
+
+\section{Model Implementation Details}
+
+\subsection{GAMSPy Implementation}
+
+The model is implemented in GAMSPy (Python interface to GAMS) using:
+
+\begin{itemize}
+    \item \textbf{Problem Type:} Mixed Integer Programming (MIP)
+    \item \textbf{Solver:} Default GAMSPy MIP solver
+    \item \textbf{Optimization Sense:} Maximize
+    \item \textbf{Variables:} Integer-valued decision variables with lower bound of 1
+\end{itemize}
+
+\subsection{Model Statistics (per facility-storage type combination)}
+
+\begin{itemize}
+    \item \textbf{Number of SKUs:} Varies by storage type (typically 2-8 SKUs)
+    \item \textbf{Decision Variables:} $|S|$ integer variables
+    \item \textbf{Constraints:} 3 inequality constraints + lower bounds
+    \item \textbf{Solution Time:} Typically $<$ 1 second per configuration
+\end{itemize}
+
+\subsection{Output Metrics}
+
+For each solved configuration, the model reports:
+
+\begin{itemize}
+    \item Optimal number of packages per SKU
+    \item Volume utilization percentage: $\frac{\sum v_i x_i^*}{V} \times 100\%$
+    \item Weight utilization percentage: $\frac{\sum w_i x_i^*}{W} \times 100\%$
+    \item Item count utilization: $\frac{\sum x_i^*}{N} \times 100\%$
+    \item Bottleneck constraint (Volume, Weight, or Item count)
+\end{itemize}
+
+\section{Example Instance}
+
+\subsection{Sample Data}
+
+Consider Sacramento facility, Pallet storage type:
+
+\textbf{SKUs using Pallet storage:} SKUD2, SKUD3, SKUC1
+
+\textbf{Shelf Constraints:}
+\begin{itemize}
+    \item Volume capacity: $V = 510$ cu ft
+    \item Weight capacity: $W = 600$ lbs
+    \item Max items/shelf: $N = 4$ packages
+\end{itemize}
+
+\textbf{Package Data:}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+SKU & Volume $v_i$ (cu ft) & Weight $w_i$ (lbs) & Storage Type \\
+\midrule
+SKUD2 & 20.0 & 75.0 & Pallet \\
+SKUD3 & 18.0 & 35.0 & Pallet \\
+SKUC1 & 22.2 & 60.0 & Pallet \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Optimal Solution}
+
+The optimization would determine values $x_{\text{SKUD2}}^*$, $x_{\text{SKUD3}}^*$, $x_{\text{SKUC1}}^*$ that:
+\begin{itemize}
+    \item Maximize average utilization
+    \item Satisfy all capacity constraints
+    \item Ensure each SKU has at least 1 package
+\end{itemize}
+
+\section{Connection to Phase 2}
+
+The output of Phase 1 (packing configurations) serves as input to Phase 2 (multiperiod warehouse expansion model):
+
+\begin{itemize}
+    \item \textbf{Input to Phase 2:} File \texttt{packing\_configurations.csv} containing optimal $x_i^*$ values
+    \item \textbf{Usage:} Phase 2 uses these package counts to compute required shelf quantities over time
+    \item \textbf{Benefit:} Ensures realistic shelf utilization in capacity planning
+\end{itemize}
+
+\section{Key Insights}
+
+\subsection{Bottleneck Analysis}
+
+The model identifies which constraint limits shelf utilization:
+\begin{itemize}
+    \item \textbf{Volume bottleneck:} Shelf fills up by volume before reaching weight/item limits
+    \item \textbf{Weight bottleneck:} Heavy items reach weight limit before volume limit
+    \item \textbf{Item count bottleneck:} Package capacity constraint is most restrictive
+\end{itemize}
+
+\subsection{Practical Implications}
+
+\begin{enumerate}
+    \item \textbf{Space Efficiency:} Identifies optimal mix of SKUs to minimize wasted shelf space
+    \item \textbf{SKU Diversity:} Ensures all SKUs are accessible on each shelf (operational requirement)
+    \item \textbf{Facility-Specific:} Different facilities have different shelf dimensions, leading to different optimal configurations
+    \item \textbf{Storage-Type-Specific:} Bins, racks, and pallets have vastly different capacities and optimal mixes
+\end{enumerate}
+
+\end{document}

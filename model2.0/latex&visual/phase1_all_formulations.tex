@@ -1,0 +1,345 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+
+\title{Phase 1: Pure-SKU Packing Formulations\\
+Discrete vs. Continuous Comparison}
+\author{ISyE 350 - InkCredible Supplies Warehouse Optimization}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+
+For pallet storage, Phase 1 uses two different pure-SKU packing approaches where the entire shelf is dedicated to a single SKU. \textbf{Both formulations share the same core structure: maximize total packages subject to volume, weight, and minimum package constraints.}
+
+\begin{enumerate}
+    \item \textbf{Pure-SKU Discrete Packing} - Respects discrete item placement limits (most pallets)
+    \item \textbf{Pure-SKU Continuous Packing} - Volume/weight only, no item limits (large furniture)
+\end{enumerate}
+
+\textbf{Operational Context:}
+\begin{itemize}[itemsep=0pt]
+    \item \textbf{Discrete Packing:} Used for most pallets where physical item placement matters (max 4-7 items per shelf)
+    \item \textbf{Continuous Packing:} Used only for large furniture (SKUC1 chairs, SKUD2 desks) where items can be stacked/arranged continuously
+    \item Both formulations: Entire shelf dedicated to one SKU for operational efficiency
+\end{itemize}
+
+\textbf{Key Difference:} The discrete formulation partitions the shelf into $N$ discrete item slots and maximizes packages per slot, while the continuous formulation maximizes packages across the entire shelf without item slot restrictions.
+
+\newpage
+
+\section{Formulation 1: Pure-SKU Discrete Packing}
+
+\textbf{Use Case:} Entire shelf dedicated to one SKU, with discrete item placement (most pallets)
+
+\vspace{0.5cm}
+
+\noindent\textbf{SETS AND INDICES}
+
+\begin{align*}
+i &\quad \text{One specific SKU (shelf dedicated to SKU } i \text{)}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{PARAMETERS}
+
+\begin{align*}
+v_i &\quad \text{Volume per package of SKU } i \text{ (cubic feet)} \\
+w_i &\quad \text{Weight per package of SKU } i \text{ (lbs)} \\
+V &\quad \text{Shelf volume capacity (cubic feet)} \\
+W &\quad \text{Shelf weight capacity (lbs)} \\
+N &\quad \text{Maximum number of discrete items per shelf} \\
+V_{\text{item}} &= V / N \quad \text{Volume available per item slot} \\
+W_{\text{item}} &= W / N \quad \text{Weight capacity per item slot}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{DECISION VARIABLES}
+
+\begin{align*}
+p &\in \mathbb{Z}_+ \quad \text{Packages per item slot}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{OBJECTIVE FUNCTION}
+
+\begin{equation}
+\max \quad Z = N \cdot p
+\end{equation}
+
+Maximize total packages on shelf (packages per item $\times$ number of items).
+
+\vspace{0.3cm}
+
+\noindent\textbf{CONSTRAINTS}
+
+\begin{align}
+p \cdot v_i &\leq V_{\text{item}} && \text{(Volume per item)} \\
+p \cdot w_i &\leq W_{\text{item}} && \text{(Weight per item)} \\
+p &\geq 1 && \text{(At least one package per item)}
+\end{align}
+
+\textbf{Solution:}
+\[
+p^* = \min\left\{ \left\lfloor \frac{V_{\text{item}}}{v_i} \right\rfloor, \left\lfloor \frac{W_{\text{item}}}{w_i} \right\rfloor \right\}
+\]
+
+\textbf{Total capacity:} $N \cdot p^*$ packages of SKU $i$ per shelf
+
+\textbf{Key Feature:} Respects discrete item placement constraints (e.g., max 7 items per shelf). Each item slot holds the same number of packages.
+
+\newpage
+
+\section{Formulation 2: Pure-SKU Continuous Packing}
+
+\textbf{Use Case:} Entire shelf dedicated to one large SKU, continuous packing (furniture: SKUC1 chairs, SKUD2 desks)
+
+\vspace{0.5cm}
+
+\noindent\textbf{SETS AND INDICES}
+
+\begin{align*}
+i &\quad \text{One specific SKU (shelf dedicated to SKU } i \text{)}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{PARAMETERS}
+
+\begin{align*}
+v_i &\quad \text{Volume per package of SKU } i \text{ (cubic feet)} \\
+w_i &\quad \text{Weight per package of SKU } i \text{ (lbs)} \\
+V &\quad \text{Shelf volume capacity (cubic feet)} \\
+W &\quad \text{Shelf weight capacity (lbs)}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{DECISION VARIABLES}
+
+\begin{align*}
+x &\in \mathbb{Z}_+ \quad \text{Total packages of SKU } i \text{ on shelf}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{OBJECTIVE FUNCTION}
+
+\begin{equation}
+\max \quad Z = x
+\end{equation}
+
+Maximize total packages on shelf.
+
+\vspace{0.3cm}
+
+\noindent\textbf{CONSTRAINTS}
+
+\begin{align}
+x \cdot v_i &\leq V && \text{(Volume capacity)} \\
+x \cdot w_i &\leq W && \text{(Weight capacity)} \\
+x &\geq 1 && \text{(At least one package)}
+\end{align}
+
+\textbf{Solution:}
+\[
+x^* = \min\left\{ \left\lfloor \frac{V}{v_i} \right\rfloor, \left\lfloor \frac{W}{w_i} \right\rfloor \right\}
+\]
+
+\textbf{Key Feature:} No discrete item limit ($N$ constraint removed). Furniture items can be stacked continuously to fill entire shelf volume/weight.
+
+\newpage
+
+\section{Unified Structure: Parallel Formulation Comparison}
+
+\textbf{Both formulations share the same mathematical structure with identical objective and constraints. The only difference is whether the item limit $N$ is enforced.}
+
+\vspace{0.3cm}
+
+\subsection{Shared Objective}
+
+Both formulations maximize total packages on the shelf:
+
+\begin{align*}
+\text{Discrete:} \quad &\max \quad N \cdot p \\
+\text{Continuous:} \quad &\max \quad x
+\end{align*}
+
+\subsection{Shared Constraints (Parallel Structure)}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Constraint Type} & \textbf{Pure-SKU Discrete} & \textbf{Pure-SKU Continuous} \\
+\midrule
+\textbf{(1) Volume} & $p \cdot v_i \leq V_{\text{item}} = V/N$ & $x \cdot v_i \leq V$ \\
+\textbf{(2) Weight} & $p \cdot w_i \leq W_{\text{item}} = W/N$ & $x \cdot w_i \leq W$ \\
+\textbf{(3) Item Limit} & $N$ items (enforced) & No limit (ignored) \\
+\textbf{(4) Minimum} & $p \geq 1$ & $x \geq 1$ \\
+\bottomrule
+\end{tabular}
+\caption{Parallel constraint structure of both formulations}
+\end{table}
+
+\textbf{Key Insight:} The discrete formulation divides shelf capacity by $N$ to get per-item capacity, then optimizes packages per item. The continuous formulation uses full shelf capacity directly. Both enforce volume, weight, and minimum package constraints.
+
+\vspace{0.5cm}
+
+\subsection{Mathematical Equivalence}
+
+The formulations have identical mathematical structure when expressed in terms of total packages:
+
+\begin{center}
+\begin{tabular}{cc}
+\textbf{Discrete Formulation} & \textbf{Continuous Formulation} \\[0.3cm]
+$\max \quad N \cdot p$ & $\max \quad x$ \\[0.2cm]
+\multicolumn{2}{c}{\textit{Subject to:}} \\[0.2cm]
+$(N \cdot p) \cdot v_i \leq V$ & $x \cdot v_i \leq V$ \\
+$(N \cdot p) \cdot w_i \leq W$ & $x \cdot w_i \leq W$ \\
+$N \cdot p \geq N$ & $x \geq 1$ \\
+\end{tabular}
+\end{center}
+
+Let $X = N \cdot p$ be the total packages in discrete formulation. Then both solve:
+\[
+\max \quad X \quad \text{s.t.} \quad X \cdot v_i \leq V, \quad X \cdot w_i \leq W, \quad X \geq \text{min packages}
+\]
+
+The \textbf{only difference}: discrete enforces $X = N \cdot p$ with integer $p$, while continuous allows any integer $X$.
+
+\subsection{Feature Comparison}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Feature} & \textbf{Pure-SKU Discrete} & \textbf{Pure-SKU Continuous} \\
+\midrule
+SKUs per shelf & One & One \\
+Decision variable & $p$ (packages/item) & $x$ (total packages) \\
+Item limit ($N$) & Yes (enforced) & No (ignored) \\
+Total capacity & $N \cdot p^*$ packages & $x^*$ packages \\
+Complexity & Closed-form & Closed-form \\
+Typical use & Most Pallets & Furniture Pallets only \\
+Applicable SKUs & 16 SKUs & 2 SKUs (SKUC1, SKUD2) \\
+Solution method & Arithmetic & Arithmetic \\
+\bottomrule
+\end{tabular}
+\caption{Feature comparison of Pure-SKU packing formulations}
+\end{table}
+
+\subsection{Example Calculations}
+
+\textbf{Shelf Specifications (Sacramento Pallet):}
+\begin{itemize}
+    \item Volume: $V = 510$ cu ft
+    \item Weight: $W = 600$ lbs
+    \item Max items: $N = 4$
+\end{itemize}
+
+\textbf{SKU: SKUW1 (writing utensils, small items)}
+\begin{itemize}
+    \item Package volume: $v_i = 0.0104$ cu ft
+    \item Package weight: $w_i = 1.25$ lbs
+\end{itemize}
+
+\textbf{Formulation 1 (Pure-SKU Discrete):}
+\begin{align*}
+V_{\text{item}} &= 510 / 4 = 127.5 \text{ cu ft per item} \\
+W_{\text{item}} &= 600 / 4 = 150 \text{ lbs per item} \\
+p^* &= \min\left\{ \left\lfloor \frac{127.5}{0.0104} \right\rfloor, \left\lfloor \frac{150}{1.25} \right\rfloor \right\} \\
+&= \min\{12259, 120\} = 120 \text{ packages per item} \\
+\text{Total} &= 4 \times 120 = 480 \text{ packages per shelf}
+\end{align*}
+
+\textbf{Formulation 2 (Pure-SKU Continuous):}
+\begin{align*}
+x^* &= \min\left\{ \left\lfloor \frac{510}{0.0104} \right\rfloor, \left\lfloor \frac{600}{1.25} \right\rfloor \right\} \\
+&= \min\{49038, 480\} = 480 \text{ packages per shelf}
+\end{align*}
+
+In this case, both formulations yield the same result (weight-limited).
+
+\vspace{0.5cm}
+
+\textbf{SKU: SKUD2 (desk, large furniture)}
+\begin{itemize}
+    \item Package volume: $v_i = 20.0$ cu ft
+    \item Package weight: $w_i = 75.0$ lbs
+\end{itemize}
+
+\textbf{Formulation 1 (Pure-SKU Discrete):}
+\begin{align*}
+p^* &= \min\left\{ \left\lfloor \frac{127.5}{20.0} \right\rfloor, \left\lfloor \frac{150}{75.0} \right\rfloor \right\} \\
+&= \min\{6, 2\} = 2 \text{ packages per item} \\
+\text{Total} &= 4 \times 2 = 8 \text{ packages per shelf}
+\end{align*}
+
+\textbf{Formulation 2 (Pure-SKU Continuous):}
+\begin{align*}
+x^* &= \min\left\{ \left\lfloor \frac{510}{20.0} \right\rfloor, \left\lfloor \frac{600}{75.0} \right\rfloor \right\} \\
+&= \min\{25, 8\} = 8 \text{ packages per shelf}
+\end{align*}
+
+Again, both formulations yield the same result. The continuous formulation is used for furniture as an implementation simplification.
+
+\section{Implementation Notes}
+
+\subsection{Which Formulation to Use?}
+
+The choice between discrete and continuous packing depends on the SKU characteristics:
+
+\begin{itemize}
+    \item \textbf{Pure-SKU Discrete (Formulation 1):}
+    \begin{itemize}
+        \item \textbf{Applicable SKUs:} All 16 non-furniture SKUs (SKUW1-3, SKUA1-3, SKUT1-4, SKUD1, SKUD3, SKUC2, SKUE1-3)
+        \item \textbf{Reason:} Physical item placement matters - cannot arbitrarily stack items
+        \item \textbf{Constraint:} Respects maximum items per shelf ($N = 4$ to $7$ depending on facility/storage type)
+        \item \textbf{Solution:} Closed-form arithmetic (no solver needed)
+        \item \textbf{Result:} $N \cdot p^*$ total packages per shelf
+    \end{itemize}
+
+    \item \textbf{Pure-SKU Continuous (Formulation 2):}
+    \begin{itemize}
+        \item \textbf{Applicable SKUs:} Only 2 large furniture SKUs (SKUC1 chairs, SKUD2 desks)
+        \item \textbf{Reason:} Large items can be stacked/arranged flexibly up to volume/weight limits
+        \item \textbf{Simplification:} Ignores discrete item placement limits
+        \item \textbf{Solution:} Closed-form arithmetic (no solver needed)
+        \item \textbf{Result:} $x^*$ total packages per shelf
+    \end{itemize}
+\end{itemize}
+
+\subsection{When Formulations Yield Same Results}
+
+As shown in the examples, for many SKUs both formulations yield identical results because:
+\begin{itemize}
+    \item Weight constraint is more restrictive than item count
+    \item Or volume constraint is more restrictive than item count
+    \item In these cases: $N \cdot p^* = x^*$
+\end{itemize}
+
+The continuous formulation is used for furniture as an \textbf{implementation simplification}, not because it provides different capacity.
+
+\subsection{Output File Structure}
+
+The file \texttt{packing\_configurations\_pure\_sku\_discrete.csv} contains configurations from both formulations, with a \texttt{Config\_Type} field indicating:
+\begin{itemize}
+    \item \texttt{Pure\_SKU\_Discrete} - 16 SKUs using discrete item limits
+    \item \texttt{Pure\_SKU\_Continuous\_Furniture} - 2 furniture SKUs using continuous packing
+\end{itemize}
+
+Phase 2 models use this combined configuration file to determine shelf capacity requirements for each SKU at each facility.
+
+\end{document}

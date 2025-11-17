@@ -1,0 +1,288 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+
+\title{Phase 2: Daily Multiperiod Warehouse Expansion Model\\
+Mathematical Formulation}
+\author{ISyE 350 - InkCredible Supplies Warehouse Optimization}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Description}
+
+The Phase 2 Daily Multiperiod Model optimizes warehouse expansion decisions for Sacramento and Austin facilities over a 10-year planning horizon (2026-2035) with \textbf{daily time granularity}. The model determines the minimum shelf expansion required to meet demand while maintaining operational feasibility across 2,520 business days.
+
+\subsection{Model Context}
+
+\begin{itemize}[itemsep=0pt]
+    \item \textbf{Time Horizon:} 120 months $\times$ 21 business days/month = 2,520 daily time periods
+    \item \textbf{Facilities:} Columbus (no expansion allowed), Sacramento (expandable), Austin (expandable)
+    \item \textbf{Storage Types:} Bins, Racking, Pallet, Hazmat
+    \item \textbf{Approach:} Feasibility model with slack variables to identify minimum expansion needed
+    \item \textbf{Key Feature:} Daily inventory tracking with carryover between days and months
+    \item \textbf{Capacity Constraint:} 93\% utilization cap (Columbus current, Sacramento/Austin expansion only)
+\end{itemize}
+
+\section{Mathematical Formulation}
+
+\vspace{0.5cm}
+
+\noindent\textbf{SETS AND INDICES}
+
+\begin{align*}
+i \in S \quad &\text{SKUs (18 products)} \\
+f \in F \quad &\text{Facilities: Columbus, Sacramento, Austin} \\
+f_{\text{exp}} \in F_{\text{exp}} \quad &\text{Expandable facilities: Sacramento, Austin} \\
+st \in ST \quad &\text{Storage types: Bins, Racking, Pallet, Hazmat} \\
+m \in M \quad &\text{Months: } m = 1, 2, \ldots, 120 \\
+d \in D \quad &\text{Days within month: } d = 1, 2, \ldots, 21 \\
+c \in C \quad &\text{Packing configurations from Phase 1}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{PARAMETERS}
+
+\begin{align*}
+\delta_{m,d,i} &\quad \text{Daily demand for SKU } i \text{ on day } d \text{ of month } m \text{ (units)} \\
+h_{i,f} &\quad \text{Days-on-hand for SKU } i \text{ at facility } f \text{ (days)} \\
+u_{c,i} &\quad \text{Units of SKU } i \text{ per shelf in configuration } c \\
+\phi^f_{c,f} &\quad \text{Binary: 1 if config } c \text{ for facility } f \\
+\phi^{st}_{c,st} &\quad \text{Binary: 1 if config } c \text{ for storage type } st \\
+N_{f,st} &\quad \text{Current shelves of type } st \text{ at facility } f \\
+\overline{N}^{\text{Pallet}}_{\text{Sac}} &= 2810 \quad \text{Max pallet expansion (Sacramento)} \\
+\overline{N}^{\text{Pallet}}_{\text{Austin}} &= 2250 \quad \text{Max pallet expansion (Austin)} \\
+\rho &= 0.93 \quad \text{Maximum utilization rate (93\%)}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{DECISION VARIABLES}
+
+\begin{align*}
+\text{Operational Variables:} \\
+I_{m,d,i,f} &\in \mathbb{R}_+ \quad \text{Inventory of SKU } i \text{ at facility } f \text{ at end of day } d \text{ of month } m \\
+X_{m,d,i,f} &\in \mathbb{R}_+ \quad \text{Shipments of SKU } i \text{ from facility } f \text{ on day } d \text{ of month } m \\
+Y_{m,d,i,f} &\in \mathbb{R}_+ \quad \text{Deliveries of SKU } i \text{ to facility } f \text{ on day } d \text{ of month } m \\
+\\
+\text{Capacity Variables:} \\
+n_c &\in \mathbb{R}_+ \quad \text{Number of shelves assigned to configuration } c \\
+\\
+\text{Slack Variables (Penalty Terms):} \\
+s^D_{m,d,i} &\in \mathbb{R}_+ \quad \text{Unmet demand for SKU } i \text{ on day } d \text{ of month } m \\
+s^H_{m,d,i,f} &\in \mathbb{R}_+ \quad \text{Days-on-hand shortage for SKU } i \text{ at facility } f \text{ on day } d \text{ of month } m \\
+s^{\text{Shelf}}_{\text{Sac},st} &\in \mathbb{R}_+ \quad \text{Additional shelves needed at Sacramento for storage type } st \\
+s^{\text{Shelf}}_{\text{Austin},st} &\in \mathbb{R}_+ \quad \text{Additional shelves needed at Austin for storage type } st \\
+s^{\text{Pallet}}_{\text{Sac}} &\in \mathbb{R}_+ \quad \text{Sacramento pallet expansion limit violation} \\
+s^{\text{Pallet}}_{\text{Austin}} &\in \mathbb{R}_+ \quad \text{Austin pallet expansion limit violation} \\
+\\
+\text{Objective Variable:} \\
+Z &\in \mathbb{R} \quad \text{Total weighted slack (penalty)}
+\end{align*}
+
+\vspace{0.3cm}
+
+\noindent\textbf{OBJECTIVE FUNCTION}
+
+\begin{equation}
+\min \quad Z
+\end{equation}
+
+where $Z$ is defined by the objective constraint (see constraint 1).
+
+\vspace{0.3cm}
+
+\noindent\textbf{CONSTRAINTS}
+
+\begin{align}
+Z &= 1000 \sum_{m,d,i} s^D_{m,d,i} + 10 \sum_{m,d,i,f} s^H_{m,d,i,f} \nonumber \\
+&\quad + 100 \sum_{st} s^{\text{Shelf}}_{\text{Sac},st} + 100 \sum_{st} s^{\text{Shelf}}_{\text{Austin},st} \nonumber \\
+&\quad + 500 \, s^{\text{Pallet}}_{\text{Sac}} + 500 \, s^{\text{Pallet}}_{\text{Austin}} && \text{(1) Objective definition}
+\\[0.3cm]
+\sum_{f \in F} X_{m,d,i,f} + s^D_{m,d,i} &\geq \delta_{m,d,i} \quad \forall m, d, i && \text{(2) Daily demand fulfillment}
+\\[0.3cm]
+I_{m,d,i,f} &= I_{m,d-1,i,f} + Y_{m,d,i,f} - X_{m,d,i,f} \nonumber \\
+&\quad \forall m > 1 \text{ or } d > 1, \, i, f && \text{(3) Daily inventory balance}
+\\[0.3cm]
+I_{1,1,i,f} &= Y_{1,1,i,f} - X_{1,1,i,f} \quad \forall i, f && \text{(4) Initial inventory}
+\\[0.3cm]
+I_{m,d,i,f} + s^H_{m,d,i,f} &\geq \delta_{m,d,i} \cdot h_{i,f} \quad \forall m, d, i, f && \text{(5) Days-on-hand}
+\\[0.3cm]
+I_{m,d,i,f} &\leq \sum_{c \in C} n_c \cdot u_{c,i} \cdot \phi^f_{c,f} \quad \forall m, d, i, f && \text{(6) Capacity link}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Sac}} \cdot \phi^{st}_{c,st} &\leq N_{\text{Sac},st} + s^{\text{Shelf}}_{\text{Sac},st} \quad \forall st && \text{(7) Sac shelf limits}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Austin}} \cdot \phi^{st}_{c,st} &\leq N_{\text{Austin},st} + s^{\text{Shelf}}_{\text{Austin},st} \quad \forall st && \text{(8) Austin shelf limits}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Columbus}} \cdot \phi^{st}_{c,st} &\leq N_{\text{Columbus},st} \quad \forall st && \text{(9) Columbus limits}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Sac}} \cdot \phi^{st}_{c,\text{Pallet}} &\leq N_{\text{Sac},\text{Pallet}} + \overline{N}^{\text{Pallet}}_{\text{Sac}} + s^{\text{Pallet}}_{\text{Sac}} && \text{(10) Sac pallet limit}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Austin}} \cdot \phi^{st}_{c,\text{Pallet}} &\leq N_{\text{Austin},\text{Pallet}} + \overline{N}^{\text{Pallet}}_{\text{Austin}} + s^{\text{Pallet}}_{\text{Austin}} && \text{(11) Austin pallet limit}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Columbus}} \cdot \phi^{st}_{c,st} &\leq \rho \cdot N_{\text{Columbus},st} \quad \forall st && \text{(12) Columbus 93\% cap}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Sac}} \cdot \phi^{st}_{c,st} &\leq N_{\text{Sac},st} + \rho \cdot s^{\text{Shelf}}_{\text{Sac},st} \quad \forall st && \text{(13) Sac 93\% cap}
+\\[0.3cm]
+\sum_{c \in C} n_c \cdot \phi^f_{c,\text{Austin}} \cdot \phi^{st}_{c,st} &\leq N_{\text{Austin},st} + \rho \cdot s^{\text{Shelf}}_{\text{Austin},st} \quad \forall st && \text{(14) Austin 93\% cap}
+\end{align}
+
+\newpage
+
+\section{Constraint Descriptions}
+
+\begin{enumerate}
+    \item \textbf{Objective Definition:} Total penalty is a weighted sum of all slack variables. High weights on demand slack (1000) prioritize meeting customer demand, moderate weights on shelf expansion (100-500), and low weights on days-on-hand violations (10).
+
+    \item \textbf{Daily Demand Fulfillment:} Total shipments from all facilities must meet daily demand for each SKU. Slack variable allows model to identify infeasibility.
+
+    \item \textbf{Daily Inventory Balance:} Inventory at end of each day equals previous day's inventory plus deliveries minus shipments. Handles day-to-day and month-to-month carryover.
+
+    \item \textbf{Initial Inventory:} Starting inventory (month 1, day 1) begins at zero plus any initial deliveries minus initial shipments.
+
+    \item \textbf{Days-on-Hand Safety Stock:} Each facility must maintain minimum safety stock equal to daily demand times required days-on-hand (varies by SKU and facility based on lead times).
+
+    \item \textbf{Capacity Link:} Daily inventory cannot exceed total shelf capacity, calculated from packing configurations determined in Phase 1.
+
+    \item \textbf{Sacramento Shelf Limits:} Total shelves used cannot exceed current shelves plus expansion (slack variable indicates expansion needed).
+
+    \item \textbf{Austin Shelf Limits:} Similar to Sacramento constraint.
+
+    \item \textbf{Columbus Shelf Limits:} Total shelves used cannot exceed current capacity (no expansion allowed per project requirements).
+
+    \item \textbf{Sacramento Pallet Expansion Limit:} Pallet shelf expansion at Sacramento cannot exceed 2,810 shelves (physical space constraint). Slack indicates if limit is violated.
+
+    \item \textbf{Austin Pallet Expansion Limit:} Pallet shelf expansion at Austin cannot exceed 2,250 shelves.
+
+    \item \textbf{Columbus 93\% Utilization Cap:} Columbus can only use 93\% of current capacity (operational constraint for aisle space, movement).
+
+    \item \textbf{Sacramento 93\% Utilization Cap:} Sacramento can use 100\% of current capacity plus 93\% of expansion capacity.
+
+    \item \textbf{Austin 93\% Utilization Cap:} Austin can use 100\% of current capacity plus 93\% of expansion capacity.
+\end{enumerate}
+
+\section{Model Characteristics}
+
+\subsection{Problem Type and Size}
+
+\begin{itemize}
+    \item \textbf{Problem Type:} Linear Programming (LP) - continuous relaxation for fast solving
+    \item \textbf{Variables:} Approximately 270,000+ continuous variables
+    \begin{itemize}
+        \item Daily inventory: $2,520 \times 18 \times 3 = 136,080$ variables
+        \item Daily shipments: $2,520 \times 18 \times 3 = 136,080$ variables
+        \item Daily deliveries: $2,520 \times 18 \times 3 = 136,080$ variables
+        \item Slack variables: $\sim$150,000 variables
+        \item Configuration variables: $|C|$ variables
+    \end{itemize}
+    \item \textbf{Constraints:} Approximately 400,000+ constraints
+    \item \textbf{Solution Time:} Typically 30-180 seconds depending on scenario
+\end{itemize}
+
+\subsection{Key Features}
+
+\begin{enumerate}
+    \item \textbf{Daily Time Granularity:} 2,520 daily time periods (120 months $\times$ 21 business days)
+
+    \item \textbf{Multiperiod Inventory Tracking:} Explicit inventory carryover between consecutive days and months
+
+    \item \textbf{Parameterized Days-on-Hand:} Model accepts different safety stock levels for international vs. domestic SKUs via command-line parameters
+
+    \item \textbf{Feasibility Analysis:} Slack variables identify minimum expansion needed to achieve operational feasibility
+
+    \item \textbf{Capacity Realism:} 93\% utilization cap ensures sufficient aisle space and operational flexibility
+
+    \item \textbf{Packing Configuration Integration:} Uses optimal shelf configurations from Phase 1 set packing model
+\end{enumerate}
+
+\subsection{Daily Inventory Balance Details}
+
+The inventory balance constraint handles three cases:
+
+\textbf{Case 1: First day of first month ($m=1, d=1$):}
+\[
+I_{1,1,i,f} = Y_{1,1,i,f} - X_{1,1,i,f}
+\]
+Inventory starts at zero.
+
+\textbf{Case 2: Within a month ($m \geq 1, d > 1$):}
+\[
+I_{m,d,i,f} = I_{m,d-1,i,f} + Y_{m,d,i,f} - X_{m,d,i,f}
+\]
+Inventory carries over from previous day within same month.
+
+\textbf{Case 3: First day of subsequent months ($m > 1, d = 1$):}
+\[
+I_{m,1,i,f} = I_{m-1,21,i,f} + Y_{m,1,i,f} - X_{m,1,i,f}
+\]
+Inventory carries over from last day (day 21) of previous month.
+
+\section{Usage and Parameterization}
+
+The model accepts parameterization via command-line arguments:
+
+\textbf{Command-Line Usage:}
+\begin{verbatim}
+python phase2_DAILY_parameterized.py --doh_intl 3 --doh_dom 1
+python phase2_DAILY_parameterized.py --doh_intl 5 --doh_dom 2
+python phase2_DAILY_parameterized.py --doh_intl 10 --doh_dom 3
+\end{verbatim}
+
+\textbf{Parameters:}
+\begin{itemize}
+    \item \texttt{--doh\_intl}: Days-on-hand for international SKUs (SKUW1-3, SKUE1-3)
+    \item \texttt{--doh\_dom}: Days-on-hand for domestic SKUs (all others)
+    \item \texttt{--max\_time}: Maximum solve time in seconds (default: 180)
+    \item \texttt{--scenario\_name}: Custom name for output folder
+\end{itemize}
+
+This allows running sensitivity analysis across different safety stock policies.
+
+\section{Output Interpretation}
+
+\subsection{Optimal Solution (Zero Slack)}
+
+If $Z^* = 0$, the current capacity plus specified expansion limits are sufficient:
+\begin{itemize}
+    \item All demand is met: $s^D_{m,d,i} = 0$ for all $m, d, i$
+    \item Safety stock requirements satisfied: $s^H_{m,d,i,f} = 0$ for all $m, d, i, f$
+    \item No expansion needed: $s^{\text{Shelf}}_{\text{Sac},st} = s^{\text{Shelf}}_{\text{Austin},st} = 0$
+\end{itemize}
+
+\subsection{Infeasible Solution (Positive Slack)}
+
+If $Z^* > 0$, slack variables indicate where constraints are violated:
+
+\begin{itemize}
+    \item \textbf{Positive $s^{\text{Shelf}}$ values:} Indicate minimum shelf expansion needed
+    \begin{itemize}
+        \item $s^{\text{Shelf}}_{\text{Sac},\text{Pallet}} = 500$ means Sacramento needs 500 additional pallet shelves
+    \end{itemize}
+
+    \item \textbf{Positive $s^{\text{Pallet}}$ values:} Indicate expansion limit violations
+    \begin{itemize}
+        \item $s^{\text{Pallet}}_{\text{Sac}} > 0$ means Sacramento needs to exceed the 2,810 pallet shelf limit
+    \end{itemize}
+
+    \item \textbf{Positive $s^D$ or $s^H$ values:} Indicate operational infeasibility (rare if capacity is adequate)
+\end{itemize}
+
+\section{Connection to Phase 1}
+
+Phase 2 uses the output from Phase 1 (packing configurations):
+
+\begin{itemize}
+    \item \textbf{Input File:} \texttt{packing\_configurations\_pure\_sku\_discrete.csv}
+    \item \textbf{Configuration Parameters:} $u_{c,i}$, $\phi^f_{c,f}$, $\phi^{st}_{c,st}$ are derived from Phase 1 results
+    \item \textbf{Ensures Realism:} Capacity calculations reflect actual shelf utilization from optimal packing
+\end{itemize}
+
+\end{document}
