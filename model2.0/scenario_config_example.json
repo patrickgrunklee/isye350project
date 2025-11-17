@@ -1,0 +1,6 @@
+{
+  "doh_international": 3,
+  "doh_domestic": 1,
+  "scenario_name": "3_1_doh",
+  "max_solve_time": 180
+}

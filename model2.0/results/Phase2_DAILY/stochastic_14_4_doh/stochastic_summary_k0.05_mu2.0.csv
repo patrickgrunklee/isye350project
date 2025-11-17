@@ -1,0 +1,2 @@
+Scenario,k_factor,mean_delay,num_simulations,baseline_total_shelves,avg_delay_days,total_delay_events,timestamp
+14_4_doh,0.05,2.0,50,3993.9395411162327,2.353878014209722,381430,2025-11-15 10:51:37

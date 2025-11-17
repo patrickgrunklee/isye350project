@@ -1,0 +1,194 @@
+================================================================================
+All Facilities - Year 10 Storage Type Utilization Summary
+================================================================================
+
+Analysis Period: Months 109-120 (Year 10)
+Days Analyzed: 252 business days
+Scenario: 10/3 Days-on-Hand with Recommended Expansion
+
+Expansion Applied:
+  - Columbus: No expansion (cannot expand)
+  - Sacramento: +1,570 Pallet shelves
+  - Austin: +304 Pallet shelves
+
+================================================================================
+SYSTEM-WIDE UTILIZATION (ACROSS ALL FACILITIES)
+================================================================================
+
+This shows true utilization: Total demand / Total capacity across all facilities
+
+Pallet:
+  Average Utilization: 1.84%
+  Peak Utilization: 2.80% (Month 115, Day 1)
+  Minimum Utilization: 1.47%
+  Average Capacity Used: 265,006 units
+  Total System Capacity: 14,407,162 units
+  Excess Capacity: 14,142,156 units
+
+Racking:
+  Average Utilization: 0.64%
+  Peak Utilization: 0.98% (Month 115, Day 1)
+  Minimum Utilization: 0.52%
+  Average Capacity Used: 69,815 units
+  Total System Capacity: 10,907,744 units
+  Excess Capacity: 10,837,929 units
+
+Bins:
+  Average Utilization: 0.05%
+  Peak Utilization: 0.07% (Month 115, Day 1)
+  Minimum Utilization: 0.04%
+  Average Capacity Used: 123,188 units
+  Total System Capacity: 251,572,320 units
+  Excess Capacity: 251,449,132 units
+
+Hazmat:
+  Average Utilization: 0.28%
+  Peak Utilization: 0.39% (Month 115, Day 1)
+  Minimum Utilization: 0.20%
+  Average Capacity Used: 26,590 units
+  Total System Capacity: 9,646,656 units
+  Excess Capacity: 9,620,066 units
+
+================================================================================
+COLUMBUS FACILITY
+================================================================================
+
+Shelf Capacity by Storage Type:
+  Pallet: 3,080 shelves
+  Racking: 15,600 shelves
+  Bins: 647,680 shelves
+  Hazmat: 9,200 shelves
+
+Utilization Statistics by Storage Type:
+
+  Pallet:
+    Average Utilization: 3.65%
+    Peak Utilization: 5.56% (Month 115, Day 1)
+    Minimum Utilization: 2.91%
+    Average Capacity Used: 265,006 units
+    Total Capacity Available: 7,259,560 units
+
+  Racking:
+    Average Utilization: 1.65%
+    Peak Utilization: 2.51% (Month 115, Day 1)
+    Minimum Utilization: 1.33%
+    Average Capacity Used: 69,815 units
+    Total Capacity Available: 4,243,200 units
+
+  Bins:
+    Average Utilization: 0.05%
+    Peak Utilization: 0.08% (Month 115, Day 1)
+    Minimum Utilization: 0.04%
+    Average Capacity Used: 123,188 units
+    Total Capacity Available: 233,164,800 units
+
+  Hazmat:
+    Average Utilization: 0.38%
+    Peak Utilization: 0.54% (Month 115, Day 1)
+    Minimum Utilization: 0.29%
+    Average Capacity Used: 26,590 units
+    Total Capacity Available: 6,918,400 units
+
+================================================================================
+SACRAMENTO FACILITY
+================================================================================
+
+Shelf Capacity by Storage Type:
+  Pallet: 2,670 shelves
+  Racking: 13,078 shelves
+  Bins: 14,400 shelves
+  Hazmat: 948 shelves
+
+Utilization Statistics by Storage Type:
+
+  Pallet:
+    Average Utilization: 7.43%
+    Peak Utilization: 11.32% (Month 115, Day 1)
+    Minimum Utilization: 5.93%
+    Average Capacity Used: 265,006 units
+    Total Capacity Available: 3,564,450 units
+
+  Racking:
+    Average Utilization: 1.96%
+    Peak Utilization: 3.00% (Month 115, Day 1)
+    Minimum Utilization: 1.59%
+    Average Capacity Used: 69,815 units
+    Total Capacity Available: 3,557,216 units
+
+  Bins:
+    Average Utilization: 1.58%
+    Peak Utilization: 2.38% (Month 115, Day 1)
+    Minimum Utilization: 1.33%
+    Average Capacity Used: 123,188 units
+    Total Capacity Available: 7,776,000 units
+
+  Hazmat:
+    Average Utilization: 3.73%
+    Peak Utilization: 5.22% (Month 115, Day 1)
+    Minimum Utilization: 2.77%
+    Average Capacity Used: 26,590 units
+    Total Capacity Available: 712,896 units
+
+================================================================================
+AUSTIN FACILITY
+================================================================================
+
+Shelf Capacity by Storage Type:
+  Pallet: 1,788 shelves
+  Racking: 11,424 shelves
+  Bins: 19,688 shelves
+  Hazmat: 2,680 shelves
+
+Utilization Statistics by Storage Type:
+
+  Pallet:
+    Average Utilization: 7.40%
+    Peak Utilization: 11.26% (Month 115, Day 1)
+    Minimum Utilization: 5.90%
+    Average Capacity Used: 265,006 units
+    Total Capacity Available: 3,583,152 units
+
+  Racking:
+    Average Utilization: 2.25%
+    Peak Utilization: 3.43% (Month 115, Day 1)
+    Minimum Utilization: 1.82%
+    Average Capacity Used: 69,815 units
+    Total Capacity Available: 3,107,328 units
+
+  Bins:
+    Average Utilization: 1.16%
+    Peak Utilization: 1.74% (Month 115, Day 1)
+    Minimum Utilization: 0.98%
+    Average Capacity Used: 123,188 units
+    Total Capacity Available: 10,631,520 units
+
+  Hazmat:
+    Average Utilization: 1.32%
+    Peak Utilization: 1.85% (Month 115, Day 1)
+    Minimum Utilization: 0.98%
+    Average Capacity Used: 26,590 units
+    Total Capacity Available: 2,015,360 units
+
+================================================================================
+FACILITY COMPARISON - AVERAGE UTILIZATION BY STORAGE TYPE
+================================================================================
+
+Pallet:
+  Columbus: 3.65%
+  Sacramento: 7.43%
+  Austin: 7.40%
+
+Racking:
+  Columbus: 1.65%
+  Sacramento: 1.96%
+  Austin: 2.25%
+
+Bins:
+  Columbus: 0.05%
+  Sacramento: 1.58%
+  Austin: 1.16%
+
+Hazmat:
+  Columbus: 0.38%
+  Sacramento: 3.73%
+  Austin: 1.32%

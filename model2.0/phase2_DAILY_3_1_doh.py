@@ -23,6 +23,15 @@ from gamspy import Container, Set, Parameter, Variable, Equation, Model, Sum, Se
 from pathlib import Path
 import sys
 import os
+from truckload_constants import (
+    TRUCK_WEIGHT_CAPACITY_LBS,
+    TRUCK_VOLUME_CAPACITY_CUFT,
+    SKU_TO_SUPPLIER,
+    SKU_TO_SUPPLIER_TYPE,
+    SUPPLIERS,
+    calculate_truckloads,
+    calculate_truck_utilization
+)
 
 os.environ['GAMSLICE_STRING'] = 'd81a3160-ec06-4fb4-9543-bfff870b9ecb'
 
@@ -88,16 +97,27 @@ for _, row in sku_details_df.iterrows():
     sell_volume = (sell_dims[0] * sell_dims[1] * sell_dims[2]) / 1728  # Convert to cu ft
     sell_weight = parse_weight(row['Sell Pack Weight'])
 
+    # Inbound pack dimensions and weight
+    inbound_dims = parse_dimension(row['Inbound Pack Dimensions'])
+    inbound_volume = (inbound_dims[0] * inbound_dims[1] * inbound_dims[2]) / 1728  # Convert to cu ft
+    inbound_weight = parse_weight(row['Inbound Pack Weight'])
+
     # Inbound to sell pack conversion ratio
     # Example: SKUW1 arrives in packs of 144 units, stored as 144/12 = 12 sell packs
     inbound_to_sell_ratio = inbound_qty / sell_qty if sell_qty > 0 else 1
+
+    # Supplier type
+    supplier_type = row['Supplier Type'].strip()
 
     sku_data[sku] = {
         'sell_qty': sell_qty,
         'sell_volume': sell_volume,
         'sell_weight': sell_weight,
         'inbound_qty': inbound_qty,
-        'inbound_to_sell_ratio': inbound_to_sell_ratio
+        'inbound_volume': inbound_volume,
+        'inbound_weight': inbound_weight,
+        'inbound_to_sell_ratio': inbound_to_sell_ratio,
+        'supplier_type': supplier_type
     }
 
 skus = list(sku_data.keys())
@@ -159,6 +179,8 @@ for _, row in shelving_count_df.iterrows():
     else:
         st = st_raw
     curr_shelves[(fac, st)] = int(row['Number of Shelves'])
+
+print(f"   ✓ Current shelves loaded")
 
 # Process configs
 print("\n[6/8] Processing packing configurations...")
@@ -237,7 +259,12 @@ curr_shelves_records = [(fac, st_type, curr_shelves.get((fac, st_type), 0))
                         for fac in facilities for st_type in storage_types]
 curr_shelves_param = Parameter(m, name="curr_shelves", domain=[f, st], records=curr_shelves_records)
 
+# Pallet expansion limits
+MAX_PALLET_EXPANSION_SAC = 2810  # Maximum additional pallet shelves for Sacramento
+MAX_PALLET_EXPANSION_AUSTIN = 2250  # Maximum additional pallet shelves for Austin
+
 print("   ✓ Parameters created (daily demand indexed by month and day)")
+print(f"   ✓ Pallet expansion limits: Sacramento={MAX_PALLET_EXPANSION_SAC}, Austin={MAX_PALLET_EXPANSION_AUSTIN}")
 
 # Variables - DAILY INDEXED
 shelves_per_config = Variable(m, name="shelves_per_config", domain=c, type="positive")
@@ -249,10 +276,13 @@ slack_demand = Variable(m, name="slack_demand", domain=[t_month, t_day, s], type
 slack_doh = Variable(m, name="slack_doh", domain=[t_month, t_day, s, f], type="positive")
 slack_shelf_sac = Variable(m, name="slack_shelf_sac", domain=st, type="positive")
 slack_shelf_austin = Variable(m, name="slack_shelf_austin", domain=st, type="positive")
+slack_pallet_expansion_sac = Variable(m, name="slack_pallet_expansion_sac", type="positive")
+slack_pallet_expansion_austin = Variable(m, name="slack_pallet_expansion_austin", type="positive")
 
 total_slack = Variable(m, name="total_slack", type="free")
 
 print("   ✓ Variables created (daily inventory, shipments, deliveries)")
+print("   ✓ Slack variables for pallet expansion limits")
 
 # Objective
 obj = Equation(m, name="obj")
@@ -261,7 +291,9 @@ obj[...] = (
     Sum([t_month, t_day, s], slack_demand[t_month, t_day, s] * 1000) +
     Sum([t_month, t_day, s, f], slack_doh[t_month, t_day, s, f] * 10) +
     Sum(st, slack_shelf_sac[st] * 100) +
-    Sum(st, slack_shelf_austin[st] * 100)
+    Sum(st, slack_shelf_austin[st] * 100) +
+    slack_pallet_expansion_sac * 500 +
+    slack_pallet_expansion_austin * 500
 )
 
 # Daily demand fulfillment
@@ -325,28 +357,39 @@ shelf_limit_columbus[st] = (
     curr_shelves_param["Columbus", st]
 )
 
-# 99% utilization constraints
-total_expansion_slack = Sum(st, slack_shelf_sac[st]) + Sum(st, slack_shelf_austin[st])
-
-columbus_utilization = Equation(m, name="columbus_utilization")
-columbus_utilization[...] = (
-    Sum(c, shelves_per_config[c] * config_fac_param[c, "Columbus"] * config_st_param[c, "Pallet"]) >=
-    0.99 * curr_shelves_param["Columbus", "Pallet"] -
-    1000000 * (1 - total_expansion_slack / 1000000)
+# Pallet expansion limits with slack variables
+pallet_expansion_limit_sac = Equation(m, name="pallet_expansion_limit_sac")
+pallet_expansion_limit_sac[...] = (
+    Sum(c, shelves_per_config[c] * config_fac_param[c, "Sacramento"] * config_st_param[c, "Pallet"]) <=
+    curr_shelves_param["Sacramento", "Pallet"] + MAX_PALLET_EXPANSION_SAC + slack_pallet_expansion_sac
 )
 
-sacramento_utilization = Equation(m, name="sacramento_utilization")
-sacramento_utilization[...] = (
-    Sum(c, shelves_per_config[c] * config_fac_param[c, "Sacramento"] * config_st_param[c, "Pallet"]) >=
-    0.99 * curr_shelves_param["Sacramento", "Pallet"] -
-    1000000 * (1 - total_expansion_slack / 1000000)
+pallet_expansion_limit_austin = Equation(m, name="pallet_expansion_limit_austin")
+pallet_expansion_limit_austin[...] = (
+    Sum(c, shelves_per_config[c] * config_fac_param[c, "Austin"] * config_st_param[c, "Pallet"]) <=
+    curr_shelves_param["Austin", "Pallet"] + MAX_PALLET_EXPANSION_AUSTIN + slack_pallet_expansion_austin
 )
 
-austin_utilization = Equation(m, name="austin_utilization")
-austin_utilization[...] = (
-    Sum(c, shelves_per_config[c] * config_fac_param[c, "Austin"] * config_st_param[c, "Pallet"]) >=
-    0.99 * curr_shelves_param["Austin", "Pallet"] -
-    1000000 * (1 - total_expansion_slack / 1000000)
+# 93% utilization cap per storage type (Bins, Racking, Pallet, Hazmat)
+# Columbus (cannot expand) - cap at 93% of current capacity
+utilization_cap_columbus = Equation(m, name="utilization_cap_columbus", domain=st)
+utilization_cap_columbus[st] = (
+    Sum(c, shelves_per_config[c] * config_fac_param[c, "Columbus"] * config_st_param[c, st]) <=
+    0.93 * curr_shelves_param["Columbus", st]
+)
+
+# Sacramento (with expansion) - 100% of current + 93% of new expansion
+utilization_cap_sac = Equation(m, name="utilization_cap_sac", domain=st)
+utilization_cap_sac[st] = (
+    Sum(c, shelves_per_config[c] * config_fac_param[c, "Sacramento"] * config_st_param[c, st]) <=
+    curr_shelves_param["Sacramento", st] + 0.93 * slack_shelf_sac[st]
+)
+
+# Austin (with expansion) - 100% of current + 93% of new expansion
+utilization_cap_austin = Equation(m, name="utilization_cap_austin", domain=st)
+utilization_cap_austin[st] = (
+    Sum(c, shelves_per_config[c] * config_fac_param[c, "Austin"] * config_st_param[c, st]) <=
+    curr_shelves_param["Austin", st] + 0.93 * slack_shelf_austin[st]
 )
 
 print("   ✓ Constraints created (daily inventory balance with carryover)")
@@ -469,6 +512,156 @@ if total_expansion > 0:
     else:
         print("\n⚠️  Significant difference detected.")
         print("   Daily inventory carryover reveals different capacity needs.")
+
+print("\n[4] TRUCKLOAD ANALYSIS")
+print("="*100)
+print(f"Truck specifications: 53ft trailer")
+print(f"  - Weight capacity: {TRUCK_WEIGHT_CAPACITY_LBS:,} lbs")
+print(f"  - Volume capacity: {TRUCK_VOLUME_CAPACITY_CUFT:,} cu ft")
+print("="*100)
+
+# Extract delivery data
+deliveries_df = daily_deliveries.records
+deliveries_df.columns = ['Month', 'Day', 'SKU', 'Facility', 'Deliveries', 'Marginal', 'Lower', 'Upper', 'Scale']
+deliveries_df = deliveries_df[deliveries_df['Deliveries'] > 0.01]
+
+# Calculate truckloads per supplier per day per facility
+print("\nCalculating truckloads per supplier (by company name) per day...")
+print(f"Tracking {len(SUPPLIERS)} suppliers: {', '.join(SUPPLIERS)}")
+
+truckload_data = []
+for month in months:
+    for day in days:
+        for fac in facilities:
+            for supplier_name in SUPPLIERS:
+                # Get all deliveries for this specific supplier on this day to this facility
+                day_supplier_deliveries = deliveries_df[
+                    (deliveries_df['Month'] == str(month)) &
+                    (deliveries_df['Day'] == str(day)) &
+                    (deliveries_df['Facility'] == fac)
+                ]
+
+                total_weight = 0
+                total_volume = 0
+                num_skus = 0
+                skus_delivered = []
+
+                for _, row in day_supplier_deliveries.iterrows():
+                    sku = row['SKU']
+                    # Check if this SKU belongs to the current supplier
+                    if SKU_TO_SUPPLIER.get(sku) == supplier_name:
+                        num_inbound_packs = row['Deliveries']
+                        # Each delivery is in units of inbound packs
+                        total_weight += num_inbound_packs * sku_data[sku]['inbound_weight']
+                        total_volume += num_inbound_packs * sku_data[sku]['inbound_volume']
+                        num_skus += 1
+                        skus_delivered.append(sku)
+
+                if total_weight > 0 or total_volume > 0:
+                    trucks_needed = calculate_truckloads(total_weight, total_volume)
+                    utilization = calculate_truck_utilization(total_weight, total_volume, trucks_needed)
+
+                    truckload_data.append({
+                        'Month': month,
+                        'Day': day,
+                        'Facility': fac,
+                        'Supplier': supplier_name,
+                        'Supplier_Type': SKU_TO_SUPPLIER_TYPE.get(skus_delivered[0]) if skus_delivered else 'Unknown',
+                        'Weight_lbs': total_weight,
+                        'Volume_cuft': total_volume,
+                        'Trucks_Needed': trucks_needed,
+                        'Weight_Utilization_Pct': utilization['weight_utilization_pct'],
+                        'Volume_Utilization_Pct': utilization['volume_utilization_pct'],
+                        'Binding_Constraint': utilization['binding_constraint'],
+                        'Num_SKUs': num_skus,
+                        'SKUs_Delivered': ','.join(skus_delivered)
+                    })
+
+truckload_df = pd.DataFrame(truckload_data)
+
+if len(truckload_df) > 0:
+    # Summary statistics
+    print(f"\n✓ Calculated truckloads for {len(truckload_df)} delivery events")
+
+    print("\n--- Overall Statistics ---")
+    print(f"Total delivery days with trucks: {len(truckload_df):,}")
+    print(f"Total trucks needed over 10 years: {truckload_df['Trucks_Needed'].sum():,.2f}")
+    print(f"Average trucks per delivery: {truckload_df['Trucks_Needed'].mean():.2f}")
+    print(f"Max trucks in single day: {truckload_df['Trucks_Needed'].max():.2f}")
+    print(f"Average weight utilization: {truckload_df['Weight_Utilization_Pct'].mean():.1f}%")
+    print(f"Average volume utilization: {truckload_df['Volume_Utilization_Pct'].mean():.1f}%")
+
+    # Binding constraint analysis
+    weight_constrained = (truckload_df['Binding_Constraint'] == 'weight').sum()
+    volume_constrained = (truckload_df['Binding_Constraint'] == 'volume').sum()
+    print(f"\nBinding constraints:")
+    print(f"  Weight-constrained deliveries: {weight_constrained:,} ({weight_constrained/len(truckload_df)*100:.1f}%)")
+    print(f"  Volume-constrained deliveries: {volume_constrained:,} ({volume_constrained/len(truckload_df)*100:.1f}%)")
+
+    print("\n--- By Specific Supplier (Company Name) ---")
+    for supplier_name in SUPPLIERS:
+        supplier_trucks = truckload_df[truckload_df['Supplier'] == supplier_name]
+        if len(supplier_trucks) > 0:
+            supplier_type = supplier_trucks['Supplier_Type'].iloc[0]
+            print(f"\n{supplier_name} ({supplier_type}):")
+            print(f"  Total trucks: {supplier_trucks['Trucks_Needed'].sum():,.2f}")
+            print(f"  Delivery days: {len(supplier_trucks):,}")
+            print(f"  Avg trucks/delivery: {supplier_trucks['Trucks_Needed'].mean():.2f}")
+            print(f"  Max trucks/day: {supplier_trucks['Trucks_Needed'].max():.2f}")
+            print(f"  Avg weight utilization: {supplier_trucks['Weight_Utilization_Pct'].mean():.1f}%")
+            print(f"  Avg volume utilization: {supplier_trucks['Volume_Utilization_Pct'].mean():.1f}%")
+            weight_bound = (supplier_trucks['Binding_Constraint'] == 'weight').sum()
+            print(f"  Weight-constrained: {weight_bound}/{len(supplier_trucks)} ({weight_bound/len(supplier_trucks)*100:.1f}%)")
+
+    print("\n--- By Facility ---")
+    for fac in facilities:
+        fac_trucks = truckload_df[truckload_df['Facility'] == fac]
+        if len(fac_trucks) > 0:
+            print(f"\n{fac}:")
+            print(f"  Total trucks: {fac_trucks['Trucks_Needed'].sum():,.2f}")
+            print(f"  Delivery days: {len(fac_trucks):,}")
+            print(f"  Avg trucks/delivery: {fac_trucks['Trucks_Needed'].mean():.2f}")
+            print(f"  Max trucks/day: {fac_trucks['Trucks_Needed'].max():.2f}")
+            print(f"  Avg weight utilization: {fac_trucks['Weight_Utilization_Pct'].mean():.1f}%")
+            print(f"  Avg volume utilization: {fac_trucks['Volume_Utilization_Pct'].mean():.1f}%")
+
+    # Peak days analysis
+    print("\n--- Peak Delivery Days (>5 trucks) ---")
+    peak_days = truckload_df[truckload_df['Trucks_Needed'] > 5].sort_values('Trucks_Needed', ascending=False)
+    if len(peak_days) > 0:
+        print(f"\nFound {len(peak_days)} days with >5 trucks")
+        print("\nTop 10 highest truck days:")
+        for idx, (_, row) in enumerate(peak_days.head(10).iterrows(), 1):
+            print(f"  {idx}. Month {row['Month']}, Day {row['Day']} - {row['Facility']} - {row['Supplier']}: {row['Trucks_Needed']:.2f} trucks")
+            print(f"      Weight util: {row['Weight_Utilization_Pct']:.1f}%, Volume util: {row['Volume_Utilization_Pct']:.1f}% ({row['Binding_Constraint']} constrained)")
+    else:
+        print("  No days with >5 trucks needed")
+
+    # Low utilization analysis
+    print("\n--- Low Utilization Deliveries (<50% on binding constraint) ---")
+    low_util = truckload_df[
+        ((truckload_df['Binding_Constraint'] == 'weight') & (truckload_df['Weight_Utilization_Pct'] < 50)) |
+        ((truckload_df['Binding_Constraint'] == 'volume') & (truckload_df['Volume_Utilization_Pct'] < 50))
+    ].sort_values('Trucks_Needed', ascending=False)
+
+    if len(low_util) > 0:
+        print(f"\nFound {len(low_util)} deliveries with <50% utilization on binding constraint")
+        print(f"Total trucks in low-utilization deliveries: {low_util['Trucks_Needed'].sum():.2f}")
+        print(f"Potential optimization opportunity: {(1 - low_util['Weight_Utilization_Pct'].mean()/100) * low_util['Trucks_Needed'].sum():.2f} trucks could be saved")
+        print("\nTop 5 lowest utilization deliveries:")
+        for idx, (_, row) in enumerate(low_util.head(5).iterrows(), 1):
+            binding_util = row['Weight_Utilization_Pct'] if row['Binding_Constraint'] == 'weight' else row['Volume_Utilization_Pct']
+            print(f"  {idx}. {row['Supplier']} to {row['Facility']} (Month {row['Month']}, Day {row['Day']})")
+            print(f"      {row['Trucks_Needed']:.2f} trucks, {binding_util:.1f}% utilization on {row['Binding_Constraint']}")
+    else:
+        print("\n✓ All deliveries have >50% utilization - efficient truck usage!")
+
+    # Save truckload analysis to CSV
+    output_file = RESULTS_DIR / "truckload_analysis_3_1_doh.csv"
+    truckload_df.to_csv(output_file, index=False)
+    print(f"\n✓ Truckload analysis saved to: {output_file}")
+else:
+    print("\n⚠️  No deliveries found in model solution")
 
 print("\n" + "="*100)
 print("DAILY MODEL COMPLETE")

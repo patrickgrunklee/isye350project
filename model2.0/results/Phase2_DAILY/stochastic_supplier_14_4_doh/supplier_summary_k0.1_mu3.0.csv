@@ -1,0 +1,2 @@
+Scenario,k_factor,mean_delay,num_simulations,avg_delay_events,avg_sku_impacts,avg_truck_impacts,avg_truck_days_delay,sku_multiplication,truck_multiplication,avg_delay_duration,domestic_events,international_events,timestamp
+14_4_doh,0.1,3.0,50,2871.34,4745.66,93015.86,280085.75037559937,1.6527683938509545,32.394582320449686,3.0011305305274862,1809.44,1061.9,2025-11-16 15:58:13

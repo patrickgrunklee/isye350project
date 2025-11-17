@@ -1,0 +1,141 @@
+================================================================================
+Austin Facility - Year 10 Storage Type Utilization Summary
+================================================================================
+
+Analysis Period: Months 109-120 (Year 10)
+Days Analyzed: 252 business days
+Scenario: 10/3 Days-on-Hand with Recommended Expansion
+
+Austin Expansion Applied: +304 Pallet shelves
+
+================================================================================
+SHELF CAPACITY BY STORAGE TYPE
+================================================================================
+
+Pallet:
+  Total Shelves: 1788
+  SKUs Stored: SKUT2, SKUT3, SKUD1, SKUD2, SKUD3, SKUC1, SKUC2, SKUE2, SKUE3
+  Total Capacity: 3,583,152 units
+
+Racking:
+  Total Shelves: 11424
+  SKUs Stored: SKUA3, SKUT1, SKUT4
+  Total Capacity: 3,107,328 units
+
+Bins:
+  Total Shelves: 19688
+  SKUs Stored: SKUW1, SKUW2, SKUW3, SKUE1
+  Total Capacity: 10,631,520 units
+
+Hazmat:
+  Total Shelves: 2680
+  SKUs Stored: SKUA1, SKUA2
+  Total Capacity: 2,015,360 units
+
+================================================================================
+UTILIZATION STATISTICS BY STORAGE TYPE
+================================================================================
+
+Pallet:
+  Average Utilization: 7.40%
+  Peak Utilization: 11.26% (Month 115, Day 1)
+  Minimum Utilization: 5.90%
+  Average Capacity Used: 265,006 units
+  Total Capacity Available: 3,583,152 units
+
+Racking:
+  Average Utilization: 2.25%
+  Peak Utilization: 3.43% (Month 115, Day 1)
+  Minimum Utilization: 1.82%
+  Average Capacity Used: 69,815 units
+  Total Capacity Available: 3,107,328 units
+
+Bins:
+  Average Utilization: 1.16%
+  Peak Utilization: 1.74% (Month 115, Day 1)
+  Minimum Utilization: 0.98%
+  Average Capacity Used: 123,188 units
+  Total Capacity Available: 10,631,520 units
+
+Hazmat:
+  Average Utilization: 1.32%
+  Peak Utilization: 1.85% (Month 115, Day 1)
+  Minimum Utilization: 0.98%
+  Average Capacity Used: 26,590 units
+  Total Capacity Available: 2,015,360 units
+
+================================================================================
+MONTHLY TRENDS
+================================================================================
+
+Month 109:
+  Pallet: 5.90% avg utilization
+  Racking: 1.82% avg utilization
+  Bins: 1.00% avg utilization
+  Hazmat: 1.08% avg utilization
+
+Month 110:
+  Pallet: 6.12% avg utilization
+  Racking: 1.93% avg utilization
+  Bins: 0.99% avg utilization
+  Hazmat: 1.17% avg utilization
+
+Month 111:
+  Pallet: 6.56% avg utilization
+  Racking: 1.98% avg utilization
+  Bins: 0.98% avg utilization
+  Hazmat: 1.32% avg utilization
+
+Month 112:
+  Pallet: 6.99% avg utilization
+  Racking: 2.09% avg utilization
+  Bins: 1.07% avg utilization
+  Hazmat: 1.36% avg utilization
+
+Month 113:
+  Pallet: 8.09% avg utilization
+  Racking: 2.28% avg utilization
+  Bins: 1.32% avg utilization
+  Hazmat: 1.37% avg utilization
+
+Month 114:
+  Pallet: 8.11% avg utilization
+  Racking: 2.50% avg utilization
+  Bins: 1.32% avg utilization
+  Hazmat: 1.48% avg utilization
+
+Month 115:
+  Pallet: 11.26% avg utilization
+  Racking: 3.43% avg utilization
+  Bins: 1.74% avg utilization
+  Hazmat: 1.85% avg utilization
+
+Month 116:
+  Pallet: 8.74% avg utilization
+  Racking: 2.69% avg utilization
+  Bins: 1.28% avg utilization
+  Hazmat: 1.59% avg utilization
+
+Month 117:
+  Pallet: 6.91% avg utilization
+  Racking: 2.07% avg utilization
+  Bins: 1.07% avg utilization
+  Hazmat: 1.32% avg utilization
+
+Month 118:
+  Pallet: 7.03% avg utilization
+  Racking: 2.28% avg utilization
+  Bins: 1.12% avg utilization
+  Hazmat: 1.30% avg utilization
+
+Month 119:
+  Pallet: 6.56% avg utilization
+  Racking: 1.97% avg utilization
+  Bins: 1.01% avg utilization
+  Hazmat: 1.01% avg utilization
+
+Month 120:
+  Pallet: 6.48% avg utilization
+  Racking: 1.92% avg utilization
+  Bins: 1.01% avg utilization
+  Hazmat: 0.98% avg utilization

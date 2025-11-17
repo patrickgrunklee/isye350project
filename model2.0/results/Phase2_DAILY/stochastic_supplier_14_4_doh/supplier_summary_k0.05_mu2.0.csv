@@ -1,0 +1,2 @@
+Scenario,k_factor,mean_delay,num_simulations,avg_delay_events,avg_sku_impacts,multiplication_factor,avg_delay_duration,domestic_events,international_events,timestamp
+14_4_doh,0.05,2.0,50,1440.78,2387.0,1.656741487249962,1.9995427417448135,910.32,530.46,2025-11-15 11:00:59

@@ -1,0 +1,19 @@
+SKU Number,Supplier Type,Lead Time - Columbus,Columbus - Days on Hand,Lead Time - Sacramento,Sacramento - Days on Hand,Lead Time - Austin,Austin Days on Hand
+SKUW1,International,34,10,28,10,32,10
+SKUW2,International,34,10,28,10,32,10
+SKUW3,International,34,10,28,10,32,10
+SKUA1,Domestic,5,5,11,5,9,5
+SKUA2,Domestic,5,5,11,5,9,5
+SKUA3,Domestic,5,5,11,5,9,5
+SKUT1,Domestic,8,5,3,5,7,5
+SKUT2,Domestic,8,5,3,5,7,5
+SKUT3,Domestic,8,5,3,5,7,5
+SKUT4,Domestic,8,5,3,5,7,5
+SKUD1,Domestic,7,5,10,5,8,5
+SKUD2,Domestic,7,5,10,5,8,5
+SKUD3,Domestic,7,5,10,5,8,5
+SKUC1,Domestic,6,5,15,5,11,5
+SKUC2,Domestic,6,5,15,5,11,5
+SKUE1,International,37,10,31,10,35,10
+SKUE2,International,37,10,31,10,35,10
+SKUE3,International,37,10,31,10,35,10

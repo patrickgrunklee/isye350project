@@ -21,7 +21,11 @@
       "Bash(for file in phase2_DAILY_0_0_doh.py phase2_DAILY_5_2_doh.py phase2_DAILY_10_3_doh.py)",
       "Bash(do sed -i \"s/packing_configurations_pure_sku.csv/packing_configurations_pure_sku_discrete.csv/g\" \"$file\")",
       "Bash(echo:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git config:*)",
+      "Bash(git remote add:*)",
+      "Bash(timeout 30 python:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
