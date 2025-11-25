@@ -15,9 +15,9 @@ print("="*80)
 print("GAMSPy License Installation")
 print("="*80)
 
-# License codes
-LICENSE_1 = "d81a3160-ec06-4fb4-9543-bfff870b9ecb"
-LICENSE_2 = "8c39a188-c68a-4295-9c9d-b65ac74bce78"
+# Insert Licenses HERE
+# LICENSE_1 = "..."
+# LICENSE_2 = "..."
 
 try:
     from gamspy import Container
